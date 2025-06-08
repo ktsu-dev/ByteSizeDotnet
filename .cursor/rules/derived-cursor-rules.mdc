@@ -215,3 +215,9 @@ The README should also have a "Learning Support" section, with the following con
 ```
 
 *   **Unit Testing Framework:** When teaching unit testing, use the MSTest framework.
+
+*   **Project Directory Structure:** Each project directory must contain:
+    *   `README.md` - Project overview and requirements
+    *   `src/` - Implementation code
+    *   `tests/` - Unit tests (when applicable)
+    *   `docs/` - Project-specific documentation
