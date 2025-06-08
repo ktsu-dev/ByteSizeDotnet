@@ -1216,3 +1216,39 @@ Deleting the separate project guide since we're merging into README
 
 ---
 
+_**User**_
+
+I want to the readme files for each project to be the comprehensive guide for implementing the project and learning the desired concepts, some projects have separate guides which should be used as reference when updating the readmes and then removed, make them all follow a similar format and structure and that they are all comprehensive
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
