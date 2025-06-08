@@ -392,7 +392,7 @@ Mark off skills as you feel confident with them:
 
 - [ ] Reflection and custom attributes
 - [ ] Expression trees and dynamic code
-- [ ] Memory management and Span<T>
+- [ ] Memory management and Span\<T\>
 - [ ] Unsafe code and P/Invoke
 - [ ] Performance optimization techniques
 

@@ -16,6 +16,7 @@ globs: *
 ## CODING STANDARDS
 
 *   Ensure all csproj files, especially in test projects, have uniform settings.
+*   **Markdown Headings:** Angle brackets in markdown headings must be escaped. For example: `## This<T>` should be `## This\<T\>`.
 
 ## WORKFLOW & RELEASE RULES
 
@@ -585,9 +586,3 @@ The README should also have a "Learning Support" section, with the following con
         ```
         project-20-performance-profiler/
         ├── PerformanceProfiler.sln
-        ├── PerformanceProfiler.Core/
-        ├── PerformanceProfiler.App/
-        └── PerformanceProfiler.Tests/
-        ```
-
-*   **README Expansion Status (20
