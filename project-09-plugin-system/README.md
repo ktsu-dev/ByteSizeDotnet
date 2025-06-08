@@ -40,8 +40,7 @@ project-09-plugin-system/
 ├── PluginSystem.Core/           # Main library implementation
 ├── PluginSystem.App/            # Console application
 └── PluginSystem.Tests/          # Unit tests
-├── tests/                       # Unit tests
-└── docs/                        # Additional documentation
+
 ```
 
 ## What You'll Build

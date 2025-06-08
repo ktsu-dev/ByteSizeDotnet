@@ -28,7 +28,7 @@ This project includes a complete solution template:
 │   └── Program.cs                      # TODO: Implement demo application
 └── AudioManager.Tests/                 # Unit tests
     ├── AudioManager.Tests.csproj       # Test project with MSTest
-    └── Tests/                          # TODO: Implement test classes
+    └── UnitTest1.cs                    # TODO: Implement test classes
 ```
 
 ## Learning Objectives

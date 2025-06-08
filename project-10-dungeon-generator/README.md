@@ -40,8 +40,7 @@ project-10-dungeon-generator/
 ├── DungeonGenerator.Core/       # Main library implementation
 ├── DungeonGenerator.App/        # Console application
 └── DungeonGenerator.Tests/      # Unit tests
-├── tests/                          # Unit tests
-└── docs/                           # Additional documentation
+
 ```
 
 ## What You'll Build

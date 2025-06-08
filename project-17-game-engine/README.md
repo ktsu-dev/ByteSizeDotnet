@@ -48,9 +48,7 @@ project-17-game-engine/
 │   ├── Assets/                  # Asset management
 │   ├── Scripting/              # Game logic scripting
 │   └── Tools/                   # Engine tools
-├── tests/                       # Comprehensive test suite
-├── docs/                        # Engine documentation
-└── samples/                     # Example games
+└── GameEngine.Tests/            # Unit tests
 ```
 
 ## What You'll Build

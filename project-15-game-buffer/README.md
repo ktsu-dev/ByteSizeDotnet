@@ -40,8 +40,7 @@ project-15-game-buffer/
 ├── GameBuffer.Core/             # Main library implementation
 ├── GameBuffer.App/              # Console application
 └── GameBuffer.Tests/            # Unit tests
-├── tests/                       # Unit tests
-└── docs/                        # Additional documentation
+
 ```
 
 ## What You'll Build

@@ -40,8 +40,7 @@ project-14-dynamic-query-builder/
 ├── QueryBuilder.Core/           # Main library implementation
 ├── QueryBuilder.App/            # Console application
 └── QueryBuilder.Tests/          # Unit tests
-├── tests/                              # Unit tests
-└── docs/                               # Additional documentation
+
 ```
 
 ## What You'll Build

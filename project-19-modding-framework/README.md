@@ -47,9 +47,7 @@ project-19-modding-framework/
 │   ├── Tools/                       # Mod development tools
 │   ├── Compiler/                    # Runtime compilation
 │   └── Package/                     # Mod packaging system
-├── tests/                           # Framework testing
-├── docs/                            # API documentation
-├── tools/                           # Development tools
+└── ModdingFramework.Tests/      # Unit tests
 └── examples/                        # Sample mods
 ```
 

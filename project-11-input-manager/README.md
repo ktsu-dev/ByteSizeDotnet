@@ -40,8 +40,7 @@ project-11-input-manager/
 ├── InputManager.Core/           # Main library implementation
 ├── InputManager.App/            # Console application
 └── InputManager.Tests/          # Unit tests
-├── tests/                       # Unit tests
-└── docs/                        # Additional documentation
+
 ```
 
 ## What You'll Build

@@ -40,8 +40,7 @@ project-16-native-wrapper/
 ├── NativeWrapper.Core/          # Main library implementation
 ├── NativeWrapper.App/           # Console application
 └── NativeWrapper.Tests/         # Unit tests
-├── tests/                       # Unit tests
-└── docs/                        # Additional documentation
+
 ```
 
 ## What You'll Build

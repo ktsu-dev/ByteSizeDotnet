@@ -86,29 +86,29 @@ Navigate to the `project-06-game-save-system/` directory and create the solution
 
 ```bash
 # Create the main solution file
-dotnet new sln -n GameSaveSystem
+dotnet new sln -n GameSave
 
 # Create the main library project
-dotnet new classlib -n GameSaveSystem.Core -f net8.0
+dotnet new classlib -n GameSave.Core -f net8.0
 
 # Create the console application
-dotnet new console -n GameSaveSystem.App -f net8.0
+dotnet new console -n GameSave.App -f net8.0
 
 # Create the test project
-dotnet new mstest -n GameSaveSystem.Tests -f net8.0
+dotnet new mstest -n GameSave.Tests -f net8.0
 
 # Add necessary packages
-dotnet add GameSaveSystem.Core package System.Text.Json
-dotnet add GameSaveSystem.Core package System.IO.Compression
+dotnet add GameSave.Core package System.Text.Json
+dotnet add GameSave.Core package System.IO.Compression
 
 # Add projects to solution
-dotnet sln add GameSaveSystem.Core/GameSaveSystem.Core.csproj
-dotnet sln add GameSaveSystem.App/GameSaveSystem.App.csproj
-dotnet sln add GameSaveSystem.Tests/GameSaveSystem.Tests.csproj
+dotnet sln add GameSave.Core/GameSave.Core.csproj
+dotnet sln add GameSave.App/GameSave.App.csproj
+dotnet sln add GameSave.Tests/GameSave.Tests.csproj
 
 # Add project references
-dotnet add GameSaveSystem.App/GameSaveSystem.App.csproj reference GameSaveSystem.Core/GameSaveSystem.Core.csproj
-dotnet add GameSaveSystem.Tests/GameSaveSystem.Tests.csproj reference GameSaveSystem.Core/GameSaveSystem.Core.csproj
+dotnet add GameSave.App/GameSave.App.csproj reference GameSave.Core/GameSave.Core.csproj
+dotnet add GameSave.Tests/GameSave.Tests.csproj reference GameSave.Core/GameSave.Core.csproj
 ```
 
 ## Implementation Guide
@@ -118,7 +118,7 @@ dotnet add GameSaveSystem.Tests/GameSaveSystem.Tests.csproj reference GameSaveSy
 **Save Metadata**
 
 ```csharp
-namespace GameSaveSystem.Core.Models;
+namespace GameSave.Core.Models;
 
 // Immutable save metadata
 public record SaveMetadata(
@@ -152,7 +152,7 @@ public record GameData(
 **Save Slot Management**
 
 ```csharp
-namespace GameSaveSystem.Core.Models;
+namespace GameSave.Core.Models;
 
 public class SaveSlot
 {
@@ -184,7 +184,7 @@ public class SaveSlot
 **Core SaveSystem Class**
 
 ```csharp
-namespace GameSaveSystem.Core;
+namespace GameSave.Core;
 
 using System.IO.Compression;
 using System.Security.Cryptography;

@@ -40,8 +40,7 @@ project-12-asset-manager/
 ├── AssetManager.Core/           # Main library implementation
 ├── AssetManager.App/            # Console application
 └── AssetManager.Tests/          # Unit tests
-├── tests/                       # Unit tests
-└── docs/                        # Additional documentation
+
 ```
 
 ## What You'll Build

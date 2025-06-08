@@ -40,8 +40,7 @@ project-13-configuration-system/
 ├── ConfigurationSystem.Core/    # Main library implementation
 ├── ConfigurationSystem.App/     # Console application
 └── ConfigurationSystem.Tests/   # Unit tests
-├── tests/                          # Unit tests
-└── docs/                           # Additional documentation
+
 ```
 
 ## What You'll Build

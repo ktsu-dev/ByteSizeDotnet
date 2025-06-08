@@ -48,10 +48,7 @@ project-20-performance-profiler/
 │   ├── Reporting/                   # Report generation
 │   ├── Visualization/              # Performance visualizations
 │   └── RealTime/                    # Live monitoring
-├── tests/                           # Profiler testing
-├── docs/                            # Profiling documentation
-├── tools/                           # Analysis tools
-└── samples/                         # Example profiles
+└── PerformanceProfiler.Tests/   # Unit tests
 ```
 
 ## What You'll Build
