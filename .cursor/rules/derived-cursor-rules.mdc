@@ -1,0 +1,56 @@
+---
+description: AI rules derived by SpecStory from the project AI interaction history
+globs: *
+---
+
+## HEADERS
+
+## TECH STACK
+
+## PROJECT DOCUMENTATION & CONTEXT SYSTEM
+
+*   The curriculum should contain a dedicated page similar to the quick reference for the Microsoft design and style guidelines for .NET libraries and applications.
+*   The curriculum should have a glossary of terms too.
+*   Update the main README to guide users to the quick reference, progress tracker, and design guidelines.
+
+## CODING STANDARDS
+
+## WORKFLOW & RELEASE RULES
+
+## DEBUGGING
+
+## BEST PRACTICES & GUIDELINES
+
+When creating .NET learning curricula, prioritize the following:
+
+*   **Focus:** Emphasize building libraries, tools, and games over web services.
+*   **Time Commitment:** Design projects suitable for approximately 2 hours of evening work.
+*   **ADHD Considerations:** Create small, approachable projects with a clear, single focus to facilitate learning and maintain engagement.
+*   **Programming Fundamentals:** Minimize time spent on basic programming constructs (conditions, flow control, variables, types, methods). Instead, focus on their .NET-specific expressions and nomenclature.
+*   **Advanced Concepts:** Prioritize topics like:
+    *   Containers
+    *   Async programming
+    *   Extension methods
+    *   Pattern matching
+    *   Enumerables and deferred execution
+    *   LINQ
+    *   Fluent APIs
+    *   Dependency Injection
+    *   NuGet
+    *   Reflection
+    *   SOLID and DRY principles
+    *   Lambdas
+    *   Predicates
+    *   Selectors
+    *   Callbacks
+*   **Curriculum Structure:** Structure concepts to build upon each other logically. Projects do not need to be related to each other thematically; unrelated projects may be preferable to minimize contextual distractions.
+
+*   **Stack vs Heap Allocation:** When explaining value vs. reference semantics in the quick reference, always explain stack vs heap allocation *before* explaining value vs reference semantics. This provides necessary context.
+
+*   **Terminology Reference Table:** The quick reference guide should include a table relating common .NET names (class, struct, method, parameter, property, field) to generic programming terms and their counterparts in other languages (e.g., Java, Python, JavaScript, C++, Go, Rust). This table should cover core types, code organization, modifiers, and advanced features and modern patterns. It should also include a section explaining key differences, such as properties being unique to .NET, struct differences between .NET and C++ struct differences between .NET and C++, namespace vs. package concepts, event system specifics, and LINQ as a unique .NET feature. Position the table after the naming conventions section in the quick reference. The language translation guide should mention records, containers, lambdas objects, built in types, tuples etc.
+
+*   **Documentation Links:** The quick reference should provide quick links to Microsoft documentation for each topic. **The documents should always provide quick links to the Microsoft documentation. Reading the docs should be a fundamental theme of the curriculum.** Documentation links should be added throughout the curriculum, including in the main curriculum README and individual project READMEs, organized into logical categories. This reinforces documentation reading as a core skill.
+
+*   The curriculum should contain a dedicated page similar to the quick reference for the Microsoft design and style guidelines for .NET libraries and applications.
+
+*   Ensure the curriculum covers lambdas, predicates, selectors, callbacks, records, primary constructors, and other relevant modern .NET features.
