@@ -1266,6 +1266,426 @@ From my analysis, I found that approximately 25+ Core and App projects are still
 
 ---
 
+```bash
+findstr /s /m /v "LangVersion" *.csproj | findstr /v "Tests" | findstr "Core\|App"
+```
+
+```
+C:\dev\MoshpitGames\dotnet-bytesize>findstr /s /m /v "LangVersion" *.csproj | findstr /v "Tests" | findstr "Core\|App"
+
+C:\dev\MoshpitGames\dotnet-bytesize>
+```
+
+---
+
+Let me try a different approach to find which Core and App projects are missing LangVersion:
+
+---
+
+```bash
+for /r %f in (*.Core.csproj, *.App.csproj) do @findstr /l "LangVersion" "%f" >nul || echo Missing LangVersion: %f
+```
+
+```
+C:\dev\MoshpitGames\dotnet-bytesize>for /r %f in (*.Core.csproj, *.App.csproj) do @findstr /l "LangVersion" "%f" >nul || echo 
+Missing LangVersion: %f
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-03-string-utilities\StringUtilities.App\StringUtilities.App.c
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-05-statistics-analyzer\GameStatistics.App\GameStatistics.App.
+p.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-10-dungeon-generator\DungeonGenerator.Core\DungeonGenerator.C
+ore.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-11-input-manager\InputManager.App\InputManager.App.csproj    
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-11-input-manager\InputManager.Core\InputManager.Core.csproj  
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-12-asset-manager\AssetManager.App\AssetManager.App.csproj    
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-12-asset-manager\AssetManager.Core\AssetManager.Core.csproj  
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-13-configuration-system\ConfigurationSystem.App\Configuration
+System.App.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-13-configuration-system\ConfigurationSystem.Core\Configuratio
+nSystem.Core.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-14-dynamic-query-builder\QueryBuilder.App\QueryBuilder.App.cs
+proj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-14-dynamic-query-builder\QueryBuilder.Core\QueryBuilder.Core.
+csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-15-game-buffer\GameBuffer.App\GameBuffer.App.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-15-game-buffer\GameBuffer.Core\GameBuffer.Core.csproj        
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-16-native-wrapper\NativeWrapper.App\NativeWrapper.App.csproj 
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-16-native-wrapper\NativeWrapper.Core\NativeWrapper.Core.cspro
+j
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-17-game-engine\GameEngine.App\GameEngine.App.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-17-game-engine\GameEngine.Core\GameEngine.Core.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-18-multiplayer-system\MultiplayerSystem.App\MultiplayerSystem
+.App.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-18-multiplayer-system\MultiplayerSystem.Core\MultiplayerSyste
+m.Core.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-19-modding-framework\ModdingFramework.App\ModdingFramework.Ap
+p.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-19-modding-framework\ModdingFramework.Core\ModdingFramework.C
+ore.csproj
+Missing LangVersion: C:\dev\MoshpitGames\dotnet-bytesize\project-20-performance-profiler\PerformanceProfiler.App\PerformancePr
+ofiler.App.csproj
+
+C:\dev\MoshpitGames\dotnet-bytesize>
+```
+
+---
+
+Perfect! I can see there are quite a few Core and App projects still missing the `LangVersion` property. Let me systematically update them. I'll update them in batches to ensure consistency:
+
+---
+
+Read file: project-03-string-utilities/StringUtilities.App/StringUtilities.App.csproj
+
+---
+
+Read file: project-05-statistics-analyzer/GameStatistics.App/GameStatistics.App.csproj
+
+---
+
+Read file: project-10-dungeon-generator/DungeonGenerator.Core/DungeonGenerator.Core.csproj
+
+---
+
+Now I'll update these projects in parallel to add the missing `LangVersion` property:
+
+---
+
+```diff
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+Let me continue with more projects in parallel. I'll read a few more to understand their structure:
+
+---
+
+Read file: project-11-input-manager/InputManager.App/InputManager.App.csproj
+
+---
+
+Read file: project-11-input-manager/InputManager.Core/InputManager.Core.csproj
+
+---
+
+Read file: project-12-asset-manager/AssetManager.App/AssetManager.App.csproj
+
+---
+
+Read file: project-12-asset-manager/AssetManager.Core/AssetManager.Core.csproj
+
+---
+
+Now I'll update these projects in parallel:
+
+---
+
+```diff
+  <Project Sdk="Microsoft.NET.Sdk">
+- 
+-   <ItemGroup>
+-     <ProjectReference Include="..\InputManager.Core\InputManager.Core.csproj" />
+-   </ItemGroup>
+  
+    <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+    </PropertyGroup>
+  
++   <ItemGroup>
++     <ProjectReference Include="..\InputManager.Core\InputManager.Core.csproj" />
++   </ItemGroup>
++ 
+  </Project>
+  
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+  <Project Sdk="Microsoft.NET.Sdk">
+- 
+-   <ItemGroup>
+-     <ProjectReference Include="..\AssetManager.Core\AssetManager.Core.csproj" />
+-   </ItemGroup>
+  
+    <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+    </PropertyGroup>
+  
++   <ItemGroup>
++     <ProjectReference Include="..\AssetManager.Core\AssetManager.Core.csproj" />
++   </ItemGroup>
++ 
+  </Project>
+  
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+Let me continue with the remaining projects. I'll update them in larger batches to be more efficient:
+
+---
+
+```diff
+  <Project Sdk="Microsoft.NET.Sdk">
+- 
+-   <ItemGroup>
+-     <ProjectReference Include="..\ConfigurationSystem.Core\ConfigurationSystem.Core.csproj" />
+-   </ItemGroup>
+  
+    <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+    </PropertyGroup>
+  
++   <ItemGroup>
++     <ProjectReference Include="..\ConfigurationSystem.Core\ConfigurationSystem.Core.csproj" />
++   </ItemGroup>
++ 
+  </Project>
+  
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+  <Project Sdk="Microsoft.NET.Sdk">
+- 
+-   <ItemGroup>
+-     <ProjectReference Include="..\QueryBuilder.Core\QueryBuilder.Core.csproj" />
+-   </ItemGroup>
+  
+    <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+    </PropertyGroup>
+  
++   <ItemGroup>
++     <ProjectReference Include="..\QueryBuilder.Core\QueryBuilder.Core.csproj" />
++   </ItemGroup>
++ 
+  </Project>
+  
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+  <Project Sdk="Microsoft.NET.Sdk">
+- 
+-   <ItemGroup>
+-     <ProjectReference Include="..\GameBuffer.Core\GameBuffer.Core.csproj" />
+-   </ItemGroup>
+  
+    <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+    </PropertyGroup>
+  
++   <ItemGroup>
++     <ProjectReference Include="..\GameBuffer.Core\GameBuffer.Core.csproj" />
++   </ItemGroup>
++ 
+  </Project>
+  
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+Let me continue with the remaining projects:
+
+---
+
+```diff
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+
+
+
+
+---
+
+```diff
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+    <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+```diff
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net8.0</TargetFramework>
++     <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+```
+
+---
+
+Now let me verify that all Core and App projects have been updated by checking if any are still missing the LangVersion property:
+
+---
+
 
 
 ---

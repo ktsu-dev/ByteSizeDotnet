@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>GameStatistics.Core</PackageId>
     <Title>Game Statistics Analyzer</Title>
-    <Description>A library for analyzing game statistics with LINQ and deferred execution</Description>
+    <Description>A library for LINQ and deferred execution with game statistics</Description>
     <Authors>Your Name</Authors>
     <Copyright>Copyright (c) 2024</Copyright>
   </PropertyGroup>

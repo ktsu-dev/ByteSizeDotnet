@@ -287,6 +287,12 @@ The README should also have a "Learning Support" section, with the following con
     *   **Project 16 (Native Wrapper):** Substantial content added, but may have formatting issues and needs completion.
     *   **Projects 17-20:** Need full expansion to match comprehensive format.
 
+*   **README Expansion Status (2025-06-08 - Updated):**
+    *   **Project 15 (Game Buffer):** COMPLETE with full implementation guide, examples, challenges, and resources. Status: 1,500+ lines, production-ready guide
+    *   **Project 16 (Native Wrapper):** MOSTLY COMPLETE - Project setup and configuration, Safe handle foundation, P/Invoke declarations, Safe managed wrappers, Complete working example. Status: 800+ lines, needs extension challenges and resources section.
+    *   **Project 17 (Game Engine):** PARTIALLY COMPLETE - Started core architecture implementation, Entity-Component-System foundation, Sample application structure. Needs: Completion of remaining systems, extension challenges, resources
+    *   **Projects 18-20:** FOUNDATION LAID - All have substantial content structure, Core concepts and examples present. Need: Complete implementation guides, testing examples, extension challenges
+
 *   **Required README Structure (All Projects):**
     1.  **Microsoft Guidelines Applied** - Specific guideline references
     2.  **Learning Objectives** - Clear skill targets
@@ -298,3 +304,52 @@ The README should also have a "Learning Support" section, with the following con
     8.  **Extension Challenges** - 5-7 advanced feature suggestions
     9.  **Resources** - Microsoft documentation links
     10. **Building on Previous Projects** - Integration notes
+
+*   **csproj Standardization:**
+    *   All test projects must have the following standardized configuration:
+
+    ```xml
+    <Project Sdk="Microsoft.NET.Sdk">
+      <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+      </PropertyGroup>
+
+      <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+        <PackageReference Include="MSTest" Version="3.6.4" />
+        <PackageReference Include="coverlet.collector" Version="6.0.2">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+      </ItemGroup>
+
+      <ItemGroup>
+        <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+      </ItemGroup>
+
+      <ItemGroup>
+        <ProjectReference Include="..\[ProjectName].Core\[ProjectName].Core.csproj" />
+      </ItemGroup>
+    </Project>
+    ```
+
+    *   Key improvements made:
+        1.  **Updated Package Versions:**
+            *   `Microsoft.NET.Test.Sdk`: Updated from 17.6.0 → 17.12.0
+            *   `MSTest`: Unified from separate TestAdapter/TestFramework packages → MSTest 3.6.4
+            *   `coverlet.collector`: Updated from 6.0.0 → 6.0.2
+        2.  **Added Missing Properties:**
+            *   `<LangVersion>latest</LangVersion>` - Enables latest C# language features
+            *   `<IsPackable>false</IsPackable>` - Prevents test projects from being packaged
+            *   `<IsTestProject>true</IsTestProject>` - Properly identifies test projects
+        3.  **Standardized Package References:**
+            *   Replaced old `MSTest.TestAdapter` + `MSTest.TestFramework` with unified `MSTest` package
+            *   Added `coverlet.collector` for code coverage to all test projects
+            *   Added `<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />` for global usings
+    *   All Core and App projects must include:
+        *   `<LangVersion>latest</LangVersion>`

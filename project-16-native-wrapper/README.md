@@ -1486,102 +1486,77 @@ class Program
 }
 ```
 
-## Extension Challenges
+## 🚀 Extension Challenges
 
-Once you've completed the basic implementation, try these advanced features:
+### Challenge 1: Advanced COM Interop (⭐⭐⭐⭐)
 
-### Challenge 1: COM Interop Support
+Implement comprehensive COM object support:
 
-Add support for COM objects and interfaces:
+- Create automatic COM wrapper generators
+- Handle COM events and connection points
+- Implement custom COM interfaces with late binding
+- Add COM object lifetime management with reference counting
+- Support for COM threading models (STA/MTA)
 
-```csharp
-public interface INativeComObject : IDisposable
-{
-    void QueryInterface(Guid riid, out IntPtr ppvObject);
-    uint AddRef();
-    uint Release();
-}
-```
+### Challenge 2: High-Performance Function Pointers (⭐⭐⭐⭐⭐)
 
-### Challenge 2: Function Pointer Wrappers
+Build type-safe, high-performance function pointer system:
 
-Create type-safe function pointer wrappers:
+- Implement delegate caching to avoid repeated marshaling
+- Create IL generation for optimized native calls
+- Add function pointer validation and signature checking
+- Support for multiple calling conventions
+- Implement function pointer hot-swapping
 
-```csharp
-public unsafe class FunctionPointerWrapper<T> where T : Delegate
-{
-    private readonly IntPtr _functionPointer;
+### Challenge 3: Memory-Mapped Interop (⭐⭐⭐⭐)
 
-    public T GetDelegate() => Marshal.GetDelegateForFunctionPointer<T>(_functionPointer);
-}
-```
+Create comprehensive shared memory system:
 
-### Challenge 3: Memory-Mapped Interop
+- Implement cross-process communication via memory mapping
+- Add synchronization primitives for shared data access
+- Create type-safe structured access to mapped memory
+- Support for large file mapping and sparse files
+- Implement memory-mapped circular buffers
 
-Implement shared memory communication:
+### Challenge 4: Advanced Callback Management (⭐⭐⭐⭐⭐)
 
-```csharp
-public class SharedMemoryBuffer : IDisposable
-{
-    public void WriteData<T>(T data, long offset) where T : unmanaged;
-    public T ReadData<T>(long offset) where T : unmanaged;
-}
-```
+Build sophisticated callback handling system:
 
-### Challenge 4: Callback Marshaling
+- Implement callback lifetime management with weak references
+- Add callback exception isolation and error reporting
+- Create callback priority and filtering systems
+- Support for batched and deferred callback execution
+- Implement callback performance monitoring
 
-Advanced callback handling with lifetime management:
+### Challenge 5: Dynamic P/Invoke Code Generation (⭐⭐⭐⭐⭐)
 
-```csharp
-public class CallbackManager<T> : IDisposable where T : Delegate
-{
-    public void RegisterCallback(T callback, object? userData = null);
-    public void UnregisterCallback(T callback);
-}
-```
+Create runtime P/Invoke generation:
 
-### Challenge 5: Dynamic P/Invoke
+- Parse native library headers and generate bindings
+- Implement automatic signature inference
+- Create optimized IL for generated P/Invoke calls
+- Add native library versioning and compatibility checking
+- Support for generating async versions of native calls
 
-Runtime P/Invoke generation for dynamic libraries:
+### Challenge 6: Native String Optimization (⭐⭐⭐)
 
-```csharp
-public class DynamicPInvoke
-{
-    public T GetFunction<T>(string libraryName, string functionName) where T : Delegate;
-    public void LoadLibrary(string libraryName, string libraryPath);
-}
-```
+Implement high-performance string marshaling:
 
-### Challenge 6: Native String Handling
+- Add string pooling for frequently marshaled strings
+- Implement zero-copy string access where possible
+- Create custom string encoders for specific native formats
+- Add validation for native string security (buffer overruns)
+- Support for string marshaling across different locales
 
-Comprehensive string marshaling utilities:
+### Challenge 7: Cross-Platform Assembly Analysis (⭐⭐⭐⭐⭐)
 
-```csharp
-public static class NativeStringHelper
-{
-    public static IntPtr ToNativeUtf8(string str);
-    public static string FromNativeUtf8(IntPtr ptr);
-    public static IntPtr ToNativeUtf16(string str);
-    public static string FromNativeUtf16(IntPtr ptr);
-}
-```
+Build native dependency analysis tools:
 
-### Challenge 7: Platform-Specific Optimizations
-
-Conditional compilation for platform-specific features:
-
-```csharp
-#if WINDOWS
-    [DllImport("kernel32")]
-    private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
-#elif LINUX
-    [DllImport("libc")]
-    private static extern int clock_gettime(int clk_id, out TimeSpec tp);
-#elif MACOS
-    [DllImport("libc")]
-    private static extern ulong mach_absolute_time();
-#endif
-```
+- Create tools to analyze native library dependencies
+- Implement automatic native library packaging
+- Add runtime compatibility checking across platforms
+- Create deployment packages with platform-specific natives
+- Implement native library hot-patching and updates
 
 ## Resources
 

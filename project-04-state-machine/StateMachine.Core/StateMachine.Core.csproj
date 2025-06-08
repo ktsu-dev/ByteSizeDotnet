@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>StateMachine.Core</PackageId>
-    <Title>State Machine Framework</Title>
-    <Description>A library for implementing state machines with pattern matching</Description>
+    <Title>State Machine Library</Title>
+    <Description>A library for pattern matching and switch expressions</Description>
     <Authors>Your Name</Authors>
     <Copyright>Copyright (c) 2024</Copyright>
   </PropertyGroup>
