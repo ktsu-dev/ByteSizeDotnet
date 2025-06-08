@@ -168,7 +168,7 @@ Track your progress through the 20-project .NET mastery curriculum.
 
 - **Status**: [ ] Not Started | [ ] In Progress | [ ] Complete
 - **Focus**: Unit Testing & Mocking
-- **Key Learning**: xUnit, NUnit, Moq, test organization
+- **Key Learning**: MSTest, Moq, test organization, test attributes
 - **Deliverable**: Comprehensive test suite
 - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 

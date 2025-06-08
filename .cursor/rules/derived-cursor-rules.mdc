@@ -213,3 +213,5 @@ The README should also have a "Learning Support" section, with the following con
 - **Progressive Disclosure** - Start simple, reference deeper material as needed
 - **Practical Focus** - Every concept is taught through building real libraries and tools
 ```
+
+*   **Unit Testing Framework:** When teaching unit testing, use the MSTest framework.

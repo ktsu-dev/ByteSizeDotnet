@@ -211,7 +211,7 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 **Project**: **Test Suite for Game Logic**
 
 - **Core Concept**: Unit testing, test-driven development
-- **What You'll Learn**: xUnit, NUnit, Moq, test organization, mocking dependencies
+- **What You'll Learn**: MSTest, Moq, test organization, mocking dependencies, test attributes
 - **Deliverable**: Comprehensive test suite
 - **Microsoft Guidelines Focus**:
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)

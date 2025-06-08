@@ -213,7 +213,7 @@ public static class StringExtensions
 ## 🧪 Testing Patterns
 
 ```csharp
-[Fact]
+[TestMethod]
 public void DiceRoller_Roll_ShouldReturnValidResult()
 {
     // Arrange
@@ -223,7 +223,22 @@ public void DiceRoller_Roll_ShouldReturnValidResult()
     var result = roller.Roll(6);
 
     // Assert
-    Assert.InRange(result, 1, 6);
+    Assert.IsTrue(result >= 1 && result <= 6);
+}
+
+[TestMethod]
+[DataRow(6, 1, 6)]
+[DataRow(20, 1, 20)]
+public void DiceRoller_Roll_ShouldRespectSidesParameter(int sides, int min, int max)
+{
+    // Arrange
+    var roller = new DiceRoller();
+
+    // Act
+    var result = roller.Roll(sides);
+
+    // Assert
+    Assert.IsTrue(result >= min && result <= max);
 }
 ```
 

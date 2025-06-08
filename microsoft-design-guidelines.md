@@ -672,6 +672,7 @@ public class SaveManager { public void SaveGame() { } }
 ### Testing Guidelines
 
 - [Unit Testing Best Practices](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices) - Testing patterns and practices
+- [MSTest Framework](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest) - MSTest framework documentation
 - [Integration Testing](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests) - Integration testing approaches
 
 ### Package and Deployment
