@@ -80,77 +80,463 @@ This project completes Phase 4 by integrating system-level programming:
 - **Project 15**: Memory management for native data
 - **New Skills**: Native interop, unsafe code, and cross-platform development
 
-## Example Usage
+## Project Setup Instructions
+
+### Step 1: Create the Solution Structure (15 minutes)
+
+Navigate to the `project-16-native-wrapper/` directory:
+
+```bash
+# Create the main projects
+dotnet new sln -n NativeWrapper
+dotnet new console -n NativeWrapper.App -f net8.0
+dotnet new classlib -n NativeWrapper.Core -f net8.0
+dotnet new mstest -n NativeWrapper.Tests -f net8.0
+
+# Add projects to solution
+dotnet sln add NativeWrapper.App/NativeWrapper.App.csproj
+dotnet sln add NativeWrapper.Core/NativeWrapper.Core.csproj
+dotnet sln add NativeWrapper.Tests/NativeWrapper.Tests.csproj
+
+# Add project references
+dotnet add NativeWrapper.App/NativeWrapper.App.csproj reference NativeWrapper.Core/NativeWrapper.Core.csproj
+dotnet add NativeWrapper.Tests/NativeWrapper.Tests.csproj reference NativeWrapper.Core/NativeWrapper.Core.csproj
+```
+
+### Step 2: Configure Project Files
+
+Update the `NativeWrapper.Core.csproj` file:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+  </ItemGroup>
+</Project>
+```
+
+## Implementation Guide
+
+### Step 3: Safe Handle Foundation (25 minutes)
+
+Create safe handle types for native resource management:
 
 ```csharp
-// P/Invoke declarations for native audio library
-public static class NativeAudio
+// File: NativeWrapper.Core/SafeHandles/SafeNativeHandle.cs
+using Microsoft.Win32.SafeHandles;
+
+namespace NativeWrapper.Core.SafeHandles;
+
+public abstract class SafeNativeHandle : SafeHandleZeroOrMinusOneIsInvalid
 {
-    [DllImport("gameaudio", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr CreateAudioEngine(AudioConfig config);
+    protected SafeNativeHandle() : base(true) { }
+    protected SafeNativeHandle(bool ownsHandle) : base(ownsHandle) { }
 
-    [DllImport("gameaudio", CallingConvention = CallingConvention.Cdecl)]
-    public static extern AudioResult PlaySound(IntPtr engine,
-        [MarshalAs(UnmanagedType.LPStr)] string filename, float volume);
+    protected override bool ReleaseHandle()
+    {
+        return ReleaseNativeHandle(handle);
+    }
 
-    [DllImport("gameaudio", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void DestroyAudioEngine(IntPtr engine);
+    protected abstract bool ReleaseNativeHandle(IntPtr handle);
 }
 
-// Safe managed wrapper
+public class SafeAudioEngineHandle : SafeNativeHandle
+{
+    internal SafeAudioEngineHandle(IntPtr handle)
+    {
+        SetHandle(handle);
+    }
+
+    protected override bool ReleaseNativeHandle(IntPtr handle)
+    {
+        try
+        {
+            // Call native cleanup function
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+}
+```
+
+### Step 4: P/Invoke Declarations (30 minutes)
+
+Create organized P/Invoke declarations:
+
+```csharp
+// File: NativeWrapper.Core/Interop/NativeAudioInterop.cs
+using System.Runtime.InteropServices;
+
+namespace NativeWrapper.Core.Interop;
+
+internal static class NativeAudioInterop
+{
+    private const string LibraryName = "gameaudio";
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern IntPtr CreateAudioEngine(in AudioEngineConfig config);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern void DestroyAudioEngine(IntPtr engine);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern AudioResult LoadSound(IntPtr engine,
+        [MarshalAs(UnmanagedType.LPUTF8Str)] string filename,
+        out IntPtr soundHandle);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern AudioResult PlaySound(IntPtr engine, IntPtr sound, float volume);
+}
+
+[StructLayout(LayoutKind.Sequential)]
+internal struct AudioEngineConfig
+{
+    public int SampleRate;
+    public int BufferSize;
+    public int Channels;
+    public AudioFormat Format;
+}
+
+internal enum AudioResult : int
+{
+    Success = 0,
+    InvalidParameter = -1,
+    OutOfMemory = -2,
+    DeviceError = -3,
+    FileNotFound = -4
+}
+
+internal enum AudioFormat : int
+{
+    PCM16 = 0,
+    PCM24 = 1,
+    PCM32 = 2,
+    Float32 = 3
+}
+```
+
+### Step 5: Safe Managed Wrappers (35 minutes)
+
+Create comprehensive managed wrappers:
+
+```csharp
+// File: NativeWrapper.Core/Wrappers/AudioEngine.cs
+using NativeWrapper.Core.Interop;
+using NativeWrapper.Core.SafeHandles;
+
+namespace NativeWrapper.Core.Wrappers;
+
 public class AudioEngine : IDisposable
 {
-    private IntPtr _nativeHandle;
+    private readonly SafeAudioEngineHandle _handle;
+    private readonly Dictionary<string, AudioSource> _loadedSounds;
     private bool _disposed;
 
     public AudioEngine(AudioConfiguration config)
     {
-        var nativeConfig = MarshalConfig(config);
-        _nativeHandle = NativeAudio.CreateAudioEngine(nativeConfig);
+        ArgumentNullException.ThrowIfNull(config);
+        config.Validate();
 
-        if (_nativeHandle == IntPtr.Zero)
-            throw new AudioEngineException("Failed to create native audio engine");
+        var nativeConfig = new AudioEngineConfig
+        {
+            SampleRate = config.SampleRate,
+            BufferSize = config.BufferSize,
+            Channels = config.Channels,
+            Format = (AudioFormat)config.Format
+        };
+
+        var handle = NativeAudioInterop.CreateAudioEngine(in nativeConfig);
+        if (handle == IntPtr.Zero)
+        {
+            throw new InvalidOperationException("Failed to create native audio engine");
+        }
+
+        _handle = new SafeAudioEngineHandle(handle);
+        _loadedSounds = new Dictionary<string, AudioSource>();
     }
+
+    public bool IsValid => !_handle.IsInvalid && !_disposed;
 
     public async Task<AudioSource> LoadSoundAsync(string filename)
     {
         ThrowIfDisposed();
+        ArgumentException.ThrowIfNullOrEmpty(filename);
 
-        var result = await Task.Run(() =>
-            NativeAudio.LoadSound(_nativeHandle, filename));
+        if (_loadedSounds.TryGetValue(filename, out var existingSource))
+        {
+            return existingSource;
+        }
 
-        return result.IsSuccess
-            ? new AudioSource(result.Handle, this)
-            : throw new AudioLoadException($"Failed to load {filename}: {result.Error}");
+        return await Task.Run(() =>
+        {
+            var result = NativeAudioInterop.LoadSound(_handle.DangerousGetHandle(),
+                filename, out var soundHandle);
+
+            if (result != AudioResult.Success)
+            {
+                throw new InvalidOperationException($"Failed to load sound '{filename}'");
+            }
+
+            var source = new AudioSource(soundHandle, filename, this);
+            _loadedSounds[filename] = source;
+            return source;
+        });
+    }
+
+    public void PlaySound(AudioSource source, float volume = 1.0f)
+    {
+        ThrowIfDisposed();
+        ArgumentNullException.ThrowIfNull(source);
+
+        if (volume < 0.0f || volume > 1.0f)
+            throw new ArgumentOutOfRangeException(nameof(volume));
+
+        var result = NativeAudioInterop.PlaySound(_handle.DangerousGetHandle(),
+            source.Handle, volume);
+
+        if (result != AudioResult.Success)
+        {
+            throw new InvalidOperationException("Failed to play sound");
+        }
+    }
+
+    internal void UnloadSound(string filename)
+    {
+        _loadedSounds.Remove(filename);
     }
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!_disposed && _nativeHandle != IntPtr.Zero)
+        if (!_disposed)
         {
-            NativeAudio.DestroyAudioEngine(_nativeHandle);
-            _nativeHandle = IntPtr.Zero;
+            if (disposing)
+            {
+                foreach (var sound in _loadedSounds.Values)
+                {
+                    sound.Dispose();
+                }
+                _loadedSounds.Clear();
+                _handle.Dispose();
+            }
+            _disposed = true;
         }
-        _disposed = true;
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void ThrowIfDisposed()
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(AudioEngine));
     }
 }
+
+public class AudioSource : IDisposable
+{
+    internal IntPtr Handle { get; private set; }
+    public string Filename { get; }
+
+    private readonly AudioEngine _engine;
+    private bool _disposed;
+
+    internal AudioSource(IntPtr handle, string filename, AudioEngine engine)
+    {
+        Handle = handle;
+        Filename = filename;
+        _engine = engine;
+    }
+
+    public void Play(float volume = 1.0f)
+    {
+        ThrowIfDisposed();
+        _engine.PlaySound(this, volume);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _engine.UnloadSound(Filename);
+            }
+            Handle = IntPtr.Zero;
+            _disposed = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void ThrowIfDisposed()
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(AudioSource));
+    }
+}
+
+public class AudioConfiguration
+{
+    public int SampleRate { get; set; } = 44100;
+    public int BufferSize { get; set; } = 1024;
+    public int Channels { get; set; } = 2;
+    public AudioFormatType Format { get; set; } = AudioFormatType.Float32;
+
+    public void Validate()
+    {
+        if (SampleRate <= 0)
+            throw new ArgumentException("Sample rate must be positive");
+        if (BufferSize <= 0)
+            throw new ArgumentException("Buffer size must be positive");
+        if (Channels <= 0)
+            throw new ArgumentException("Channel count must be positive");
+    }
+}
+
+public enum AudioFormatType
+{
+    PCM16 = 0,
+    PCM24 = 1,
+    PCM32 = 2,
+    Float32 = 3
+}
+```
+
+## Testing Your Understanding
+
+Create a complete example in `NativeWrapper.App/Program.cs`:
+
+```csharp
+using NativeWrapper.Core.Wrappers;
+using System.Runtime.InteropServices;
+
+namespace NativeWrapper.App;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        Console.WriteLine("🔧 Native Library Wrapper Demo");
+        Console.WriteLine("==============================\n");
+
+        // Demo 1: Platform detection
+        DemoPlatformDetection();
+
+        // Demo 2: Audio engine simulation
+        await DemoAudioEngine();
+
+        // Demo 3: Error handling
+        DemoErrorHandling();
+
+        Console.WriteLine("\n✅ All demos completed successfully!");
+    }
+
+    static void DemoPlatformDetection()
+    {
+        Console.WriteLine("🖥️  Demo 1: Platform Detection");
+        Console.WriteLine("------------------------------");
+
+        Console.WriteLine($"OS: {Environment.OSVersion}");
+        Console.WriteLine($"Architecture: {RuntimeInformation.OSArchitecture}");
+        Console.WriteLine($"Framework: {RuntimeInformation.FrameworkDescription}");
+        Console.WriteLine($"Process Architecture: {RuntimeInformation.ProcessArchitecture}");
+        Console.WriteLine();
+    }
+
+    static async Task DemoAudioEngine()
+    {
+        Console.WriteLine("🔊 Demo 2: Audio Engine Simulation");
+        Console.WriteLine("----------------------------------");
+
+        try
+        {
+            var config = new AudioConfiguration
+            {
+                SampleRate = 44100,
+                BufferSize = 1024,
+                Channels = 2,
+                Format = AudioFormatType.Float32
+            };
+
+            config.Validate();
+            Console.WriteLine("✅ Audio configuration validated");
+            Console.WriteLine($"Config: {config.SampleRate}Hz, {config.Channels} channels");
+
+            // Note: This demonstrates the pattern without actual native libraries
+            Console.WriteLine("Would create audio engine with native interop");
+            Console.WriteLine("Would load and play sound files");
+
+            Console.WriteLine("Audio demo completed");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Audio engine error: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    static void DemoErrorHandling()
+    {
+        Console.WriteLine("⚠️  Demo 3: Error Handling");
+        Console.WriteLine("--------------------------");
+
+        try
+        {
+            var invalidConfig = new AudioConfiguration
+            {
+                SampleRate = -1,
+                BufferSize = 0,
+                Channels = 0
+            };
+
+            invalidConfig.Validate();
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"✅ Caught validation error: {ex.Message}");
+        }
+
+        Console.WriteLine("Error handling demo completed");
+        Console.WriteLine();
+    }
+}
+```
 
 // Complex marshaling example
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeVertex
 {
-    public Vector3 Position;
-    public Vector3 Normal;
-    public Vector2 TexCoord;
-    public uint Color;
+public Vector3 Position;
+public Vector3 Normal;
+public Vector2 TexCoord;
+public uint Color;
 }
 
 public unsafe class MeshRenderer : IDisposable
 {
-    public void UploadVertices(ReadOnlySpan<Vertex> vertices)
-    {
-        // Convert managed vertices to native format
-        var nativeVertices = stackalloc NativeVertex[vertices.Length];
+public void UploadVertices(ReadOnlySpan<Vertex> vertices)
+{
+// Convert managed vertices to native format
+var nativeVertices = stackalloc NativeVertex[vertices.Length];
 
         for (int i = 0; i < vertices.Length; i++)
         {
@@ -163,27 +549,29 @@ public unsafe class MeshRenderer : IDisposable
             NativeGraphics.UploadVertexData(_bufferHandle, ptr, vertices.Length);
         }
     }
+
 }
 
 // Cross-platform native library loading
 public static class NativeLibraryLoader
 {
-    public static IntPtr LoadLibrary(string libraryName)
-    {
-        return Environment.OSVersion.Platform switch
-        {
-            PlatformID.Win32NT => LoadLibraryWin32(libraryName),
-            PlatformID.Unix => LoadLibraryUnix(libraryName),
-            PlatformID.MacOSX => LoadLibraryMacOS(libraryName),
-            _ => throw new PlatformNotSupportedException()
-        };
-    }
+public static IntPtr LoadLibrary(string libraryName)
+{
+return Environment.OSVersion.Platform switch
+{
+PlatformID.Win32NT => LoadLibraryWin32(libraryName),
+PlatformID.Unix => LoadLibraryUnix(libraryName),
+PlatformID.MacOSX => LoadLibraryMacOS(libraryName),
+\_ => throw new PlatformNotSupportedException()
+};
+}
 
     [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
     private static extern IntPtr LoadLibrary(string lpFileName);
 
     [DllImport("libdl", CharSet = CharSet.Ansi)]
     private static extern IntPtr dlopen(string fileName, int flags);
+
 }
 
 // Callback handling
@@ -191,7 +579,7 @@ public delegate void NativeCallback(IntPtr userData, int eventType);
 
 public class CallbackManager
 {
-    private readonly Dictionary<IntPtr, GCHandle> _callbacks = new();
+private readonly Dictionary<IntPtr, GCHandle> \_callbacks = new();
 
     public void RegisterCallback(object userData, Action<int> callback)
     {
@@ -209,35 +597,1029 @@ public class CallbackManager
         var callbackData = (CallbackData)handle.Target!;
         callbackData.Callback(eventType);
     }
+
+}
+
+````
+
+## Project Setup Instructions
+
+### Step 1: Create the Solution Structure (15 minutes)
+
+Navigate to the `project-16-native-wrapper/` directory:
+
+```bash
+# Create the main projects
+dotnet new sln -n NativeWrapper
+dotnet new console -n NativeWrapper.App -f net8.0
+dotnet new classlib -n NativeWrapper.Core -f net8.0
+dotnet new mstest -n NativeWrapper.Tests -f net8.0
+
+# Add projects to solution
+dotnet sln add NativeWrapper.App/NativeWrapper.App.csproj
+dotnet sln add NativeWrapper.Core/NativeWrapper.Core.csproj
+dotnet sln add NativeWrapper.Tests/NativeWrapper.Tests.csproj
+
+# Add project references
+dotnet add NativeWrapper.App/NativeWrapper.App.csproj reference NativeWrapper.Core/NativeWrapper.Core.csproj
+dotnet add NativeWrapper.Tests/NativeWrapper.Tests.csproj reference NativeWrapper.Core/NativeWrapper.Core.csproj
+````
+
+### Step 2: Configure Project Files
+
+Update the `NativeWrapper.Core.csproj` file:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>NativeWrapper.Core</PackageId>
+    <Title>Native Library Wrapper</Title>
+    <Description>Safe managed wrappers for native libraries with cross-platform support</Description>
+    <Authors>Your Name</Authors>
+    <Copyright>Copyright (c) 2024</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+  </ItemGroup>
+
+  <!-- Platform-specific native libraries -->
+  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+    <Content Include="runtimes\win-x64\native\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+    <Content Include="runtimes\linux-x64\native\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'osx-x64'">
+    <Content Include="runtimes\osx-x64\native\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
+```
+
+### Step 3: Create Directory Structure
+
+Organize your interop code:
+
+```
+NativeWrapper.Core/
+├── Interop/           # P/Invoke declarations
+├── SafeHandles/       # Safe handle types
+├── Marshaling/        # Custom marshaling
+├── Wrappers/          # Managed wrappers
+├── Platforms/         # Platform-specific code
+├── Exceptions/        # Native exception handling
+└── Utilities/         # Interop utilities
+```
+
+## Implementation Guide
+
+### Step 4: Safe Handle Foundation (25 minutes)
+
+**Create safe handle types for native resource management**
+
+```csharp
+// File: NativeWrapper.Core/SafeHandles/SafeNativeHandle.cs
+using Microsoft.Win32.SafeHandles;
+using System.Runtime.InteropServices;
+
+namespace NativeWrapper.Core.SafeHandles;
+
+/// <summary>
+/// Base safe handle for native resources
+/// </summary>
+public abstract class SafeNativeHandle : SafeHandleZeroOrMinusOneIsInvalid
+{
+    protected SafeNativeHandle() : base(true) { }
+    protected SafeNativeHandle(bool ownsHandle) : base(ownsHandle) { }
+
+    protected override bool ReleaseHandle()
+    {
+        return ReleaseNativeHandle(handle);
+    }
+
+    protected abstract bool ReleaseNativeHandle(IntPtr handle);
+}
+
+/// <summary>
+/// Safe handle for audio engine resources
+/// </summary>
+public class SafeAudioEngineHandle : SafeNativeHandle
+{
+    internal SafeAudioEngineHandle(IntPtr handle)
+    {
+        SetHandle(handle);
+    }
+
+    protected override bool ReleaseNativeHandle(IntPtr handle)
+    {
+        try
+        {
+            NativeAudioInterop.DestroyAudioEngine(handle);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+}
+
+/// <summary>
+/// Safe handle for graphics context
+/// </summary>
+public class SafeGraphicsContextHandle : SafeNativeHandle
+{
+    internal SafeGraphicsContextHandle(IntPtr handle)
+    {
+        SetHandle(handle);
+    }
+
+    protected override bool ReleaseNativeHandle(IntPtr handle)
+    {
+        try
+        {
+            NativeGraphicsInterop.DestroyContext(handle);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
 ```
 
+### Step 5: P/Invoke Declarations (30 minutes)
+
+**Create organized P/Invoke declarations**
+
+```csharp
+// File: NativeWrapper.Core/Interop/NativeAudioInterop.cs
+using System.Runtime.InteropServices;
+using NativeWrapper.Core.SafeHandles;
+
+namespace NativeWrapper.Core.Interop;
+
+/// <summary>
+/// P/Invoke declarations for native audio library
+/// </summary>
+internal static class NativeAudioInterop
+{
+    private const string LibraryName = "gameaudio";
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern IntPtr CreateAudioEngine(in AudioEngineConfig config);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern void DestroyAudioEngine(IntPtr engine);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern AudioResult LoadSound(IntPtr engine,
+        [MarshalAs(UnmanagedType.LPUTF8Str)] string filename,
+        out IntPtr soundHandle);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern AudioResult PlaySound(IntPtr engine, IntPtr sound, float volume);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern AudioResult SetCallback(IntPtr engine, IntPtr callback, IntPtr userData);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern AudioResult GetLastError(IntPtr engine,
+        [MarshalAs(UnmanagedType.LPUTF8Str)] out string errorMessage);
+}
+
+/// <summary>
+/// Native structures that match the C layout
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+internal struct AudioEngineConfig
+{
+    public int SampleRate;
+    public int BufferSize;
+    public int Channels;
+    public AudioFormat Format;
+}
+
+// Enums matching native definitions
+internal enum AudioResult : int
+{
+    Success = 0,
+    InvalidParameter = -1,
+    OutOfMemory = -2,
+    DeviceError = -3,
+    FileNotFound = -4
+}
+
+internal enum AudioFormat : int
+{
+    PCM16 = 0,
+    PCM24 = 1,
+    PCM32 = 2,
+    Float32 = 3
+}
+```
+
+### Step 6: Cross-Platform Library Loading (25 minutes)
+
+**Implement platform-specific native library loading**
+
+```csharp
+// File: NativeWrapper.Core/Platforms/NativeLibraryLoader.cs
+using System.Runtime.InteropServices;
+
+namespace NativeWrapper.Core.Platforms;
+
+/// <summary>
+/// Cross-platform native library loading
+/// </summary>
+public static class NativeLibraryLoader
+{
+    private static readonly Dictionary<string, IntPtr> _loadedLibraries = new();
+
+    public static IntPtr LoadLibrary(string libraryName)
+    {
+        if (_loadedLibraries.TryGetValue(libraryName, out var existingHandle))
+        {
+            return existingHandle;
+        }
+
+        var handle = OperatingSystem.IsWindows()
+            ? LoadLibraryWindows(libraryName)
+            : OperatingSystem.IsLinux()
+                ? LoadLibraryLinux(libraryName)
+                : OperatingSystem.IsMacOS()
+                    ? LoadLibraryMacOS(libraryName)
+                    : throw new PlatformNotSupportedException($"Platform not supported: {Environment.OSVersion.Platform}");
+
+        if (handle != IntPtr.Zero)
+        {
+            _loadedLibraries[libraryName] = handle;
+        }
+
+        return handle;
+    }
+
+    public static IntPtr GetProcAddress(IntPtr libraryHandle, string functionName)
+    {
+        return OperatingSystem.IsWindows()
+            ? GetProcAddressWindows(libraryHandle, functionName)
+            : GetProcAddressUnix(libraryHandle, functionName);
+    }
+
+    public static bool FreeLibrary(IntPtr libraryHandle)
+    {
+        var result = OperatingSystem.IsWindows()
+            ? FreeLibraryWindows(libraryHandle)
+            : FreeLibraryUnix(libraryHandle);
+
+        // Remove from cache
+        var toRemove = _loadedLibraries.Where(kvp => kvp.Value == libraryHandle).ToList();
+        foreach (var item in toRemove)
+        {
+            _loadedLibraries.Remove(item.Key);
+        }
+
+        return result;
+    }
+
+    // Windows implementations
+    [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
+    private static extern IntPtr LoadLibrary(string lpFileName);
+
+    [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Ansi)]
+    private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+    [DllImport("kernel32", SetLastError = true)]
+    private static extern bool FreeLibrary(IntPtr hModule);
+
+    // Unix/Linux implementations
+    [DllImport("libdl", CharSet = CharSet.Ansi)]
+    private static extern IntPtr dlopen(string fileName, int flags);
+
+    [DllImport("libdl", CharSet = CharSet.Ansi)]
+    private static extern IntPtr dlsym(IntPtr handle, string symbol);
+
+    [DllImport("libdl")]
+    private static extern int dlclose(IntPtr handle);
+
+    private static IntPtr LoadLibraryWindows(string libraryName)
+    {
+        var paths = new[]
+        {
+            libraryName,
+            $"{libraryName}.dll",
+            Path.Combine(AppContext.BaseDirectory, $"{libraryName}.dll"),
+            Path.Combine(AppContext.BaseDirectory, "runtimes", "win-x64", "native", $"{libraryName}.dll")
+        };
+
+        foreach (var path in paths)
+        {
+            var handle = LoadLibrary(path);
+            if (handle != IntPtr.Zero)
+                return handle;
+        }
+
+        throw new DllNotFoundException($"Unable to load library '{libraryName}' on Windows");
+    }
+
+    private static IntPtr LoadLibraryLinux(string libraryName)
+    {
+        const int RTLD_NOW = 2;
+
+        var paths = new[]
+        {
+            libraryName,
+            $"lib{libraryName}.so",
+            $"{libraryName}.so",
+            Path.Combine(AppContext.BaseDirectory, $"lib{libraryName}.so"),
+            Path.Combine(AppContext.BaseDirectory, "runtimes", "linux-x64", "native", $"lib{libraryName}.so")
+        };
+
+        foreach (var path in paths)
+        {
+            var handle = dlopen(path, RTLD_NOW);
+            if (handle != IntPtr.Zero)
+                return handle;
+        }
+
+        throw new DllNotFoundException($"Unable to load library '{libraryName}' on Linux");
+    }
+
+    private static IntPtr LoadLibraryMacOS(string libraryName)
+    {
+        const int RTLD_NOW = 2;
+
+        var paths = new[]
+        {
+            libraryName,
+            $"lib{libraryName}.dylib",
+            $"{libraryName}.dylib",
+            Path.Combine(AppContext.BaseDirectory, $"lib{libraryName}.dylib"),
+            Path.Combine(AppContext.BaseDirectory, "runtimes", "osx-x64", "native", $"lib{libraryName}.dylib")
+        };
+
+        foreach (var path in paths)
+        {
+            var handle = dlopen(path, RTLD_NOW);
+            if (handle != IntPtr.Zero)
+                return handle;
+        }
+
+        throw new DllNotFoundException($"Unable to load library '{libraryName}' on macOS");
+    }
+
+    private static IntPtr GetProcAddressWindows(IntPtr libraryHandle, string functionName)
+    {
+        return GetProcAddress(libraryHandle, functionName);
+    }
+
+    private static IntPtr GetProcAddressUnix(IntPtr libraryHandle, string functionName)
+    {
+        return dlsym(libraryHandle, functionName);
+    }
+
+    private static bool FreeLibraryWindows(IntPtr libraryHandle)
+    {
+        return FreeLibrary(libraryHandle);
+    }
+
+    private static bool FreeLibraryUnix(IntPtr libraryHandle)
+    {
+        return dlclose(libraryHandle) == 0;
+    }
+}
+
+/// <summary>
+/// Platform detection utilities
+/// </summary>
+public static class PlatformDetector
+{
+    public static PlatformType GetCurrentPlatform()
+    {
+        if (OperatingSystem.IsWindows())
+            return PlatformType.Windows;
+        if (OperatingSystem.IsLinux())
+            return PlatformType.Linux;
+        if (OperatingSystem.IsMacOS())
+            return PlatformType.MacOS;
+        if (OperatingSystem.IsFreeBSD())
+            return PlatformType.FreeBSD;
+
+        return PlatformType.Unknown;
+    }
+
+    public static string GetNativeLibraryPath(string libraryName)
+    {
+        var platform = GetCurrentPlatform();
+        var baseDirectory = AppContext.BaseDirectory;
+
+        return platform switch
+        {
+            PlatformType.Windows => Path.Combine(baseDirectory, "runtimes", "win-x64", "native", $"{libraryName}.dll"),
+            PlatformType.Linux => Path.Combine(baseDirectory, "runtimes", "linux-x64", "native", $"lib{libraryName}.so"),
+            PlatformType.MacOS => Path.Combine(baseDirectory, "runtimes", "osx-x64", "native", $"lib{libraryName}.dylib"),
+            _ => throw new PlatformNotSupportedException($"Platform {platform} not supported")
+        };
+    }
+
+    public static bool IsFeatureSupported(NativeFeature feature)
+    {
+        return feature switch
+        {
+            NativeFeature.SIMD => Vector.IsHardwareAccelerated,
+            NativeFeature.AVX => System.Runtime.Intrinsics.X86.Avx.IsSupported,
+            NativeFeature.SSE => System.Runtime.Intrinsics.X86.Sse.IsSupported,
+            NativeFeature.ARM_NEON => System.Runtime.Intrinsics.Arm.AdvSimd.IsSupported,
+            _ => false
+        };
+    }
+}
+
+public enum PlatformType
+{
+    Unknown,
+    Windows,
+    Linux,
+    MacOS,
+    FreeBSD
+}
+
+public enum NativeFeature
+{
+    SIMD,
+    AVX,
+    SSE,
+    ARM_NEON
+}
+```
+
+### Step 7: Safe Managed Wrappers (35 minutes)
+
+**Create comprehensive managed wrappers with proper error handling**
+
+```csharp
+// File: NativeWrapper.Core/Wrappers/AudioEngine.cs
+using NativeWrapper.Core.Interop;
+using NativeWrapper.Core.SafeHandles;
+using NativeWrapper.Core.Exceptions;
+using System.Runtime.InteropServices;
+
+namespace NativeWrapper.Core.Wrappers;
+
+/// <summary>
+/// Managed wrapper for native audio engine
+/// </summary>
+public class AudioEngine : IDisposable
+{
+    private readonly SafeAudioEngineHandle _handle;
+    private readonly Dictionary<string, AudioSource> _loadedSounds;
+    private readonly object _lock = new();
+    private bool _disposed;
+
+    public AudioEngine(AudioConfiguration config)
+    {
+        ArgumentNullException.ThrowIfNull(config);
+        config.Validate();
+
+        var nativeConfig = new AudioEngineConfig
+        {
+            SampleRate = config.SampleRate,
+            BufferSize = config.BufferSize,
+            Channels = config.Channels,
+            Format = (AudioFormat)config.Format
+        };
+
+        var handle = NativeAudioInterop.CreateAudioEngine(in nativeConfig);
+        if (handle == IntPtr.Zero)
+        {
+            throw new AudioEngineException("Failed to create native audio engine");
+        }
+
+        _handle = new SafeAudioEngineHandle(handle);
+        _loadedSounds = new Dictionary<string, AudioSource>();
+    }
+
+    public bool IsValid => !_handle.IsInvalid && !_disposed;
+
+    public async Task<AudioSource> LoadSoundAsync(string filename)
+    {
+        ThrowIfDisposed();
+        ArgumentException.ThrowIfNullOrEmpty(filename);
+
+        lock (_lock)
+        {
+            if (_loadedSounds.TryGetValue(filename, out var existingSource))
+            {
+                return existingSource;
+            }
+        }
+
+        return await Task.Run(() =>
+        {
+            var result = NativeAudioInterop.LoadSound(_handle.DangerousGetHandle(), filename, out var soundHandle);
+
+            if (result != AudioResult.Success)
+            {
+                var errorMsg = GetLastError();
+                throw new AudioLoadException($"Failed to load sound '{filename}': {errorMsg}");
+            }
+
+            var source = new AudioSource(soundHandle, filename, this);
+
+            lock (_lock)
+            {
+                _loadedSounds[filename] = source;
+            }
+
+            return source;
+        });
+    }
+
+    public void PlaySound(AudioSource source, float volume = 1.0f)
+    {
+        ThrowIfDisposed();
+        ArgumentNullException.ThrowIfNull(source);
+
+        if (volume < 0.0f || volume > 1.0f)
+            throw new ArgumentOutOfRangeException(nameof(volume), "Volume must be between 0.0 and 1.0");
+
+        var result = NativeAudioInterop.PlaySound(_handle.DangerousGetHandle(), source.Handle, volume);
+        if (result != AudioResult.Success)
+        {
+            var errorMsg = GetLastError();
+            throw new AudioPlaybackException($"Failed to play sound: {errorMsg}");
+        }
+    }
+
+    private string GetLastError()
+    {
+        try
+        {
+            var result = NativeAudioInterop.GetLastError(_handle.DangerousGetHandle(), out var errorMessage);
+            return result == AudioResult.Success ? errorMessage ?? "Unknown error" : "Failed to get error message";
+        }
+        catch
+        {
+            return "Unknown error";
+        }
+    }
+
+    internal void UnloadSound(string filename)
+    {
+        lock (_lock)
+        {
+            _loadedSounds.Remove(filename);
+        }
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                lock (_lock)
+                {
+                    foreach (var sound in _loadedSounds.Values)
+                    {
+                        sound.Dispose();
+                    }
+                    _loadedSounds.Clear();
+                }
+
+                _handle.Dispose();
+            }
+
+            _disposed = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void ThrowIfDisposed()
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(AudioEngine));
+    }
+}
+
+/// <summary>
+/// Represents a loaded audio source
+/// </summary>
+public class AudioSource : IDisposable
+{
+    internal IntPtr Handle { get; private set; }
+    public string Filename { get; }
+
+    private readonly AudioEngine _engine;
+    private bool _disposed;
+
+    internal AudioSource(IntPtr handle, string filename, AudioEngine engine)
+    {
+        Handle = handle;
+        Filename = filename;
+        _engine = engine;
+    }
+
+    public void Play(float volume = 1.0f)
+    {
+        ThrowIfDisposed();
+        _engine.PlaySound(this, volume);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _engine.UnloadSound(Filename);
+            }
+
+            Handle = IntPtr.Zero;
+            _disposed = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void ThrowIfDisposed()
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(AudioSource));
+    }
+}
+
+// Supporting types and configuration
+public class AudioConfiguration
+{
+    public int SampleRate { get; set; } = 44100;
+    public int BufferSize { get; set; } = 1024;
+    public int Channels { get; set; } = 2;
+    public AudioFormatType Format { get; set; } = AudioFormatType.Float32;
+
+    public void Validate()
+    {
+        if (SampleRate <= 0)
+            throw new ArgumentException("Sample rate must be positive");
+        if (BufferSize <= 0)
+            throw new ArgumentException("Buffer size must be positive");
+        if (Channels <= 0)
+            throw new ArgumentException("Channel count must be positive");
+    }
+}
+
+public enum AudioFormatType
+{
+    PCM16 = 0,
+    PCM24 = 1,
+    PCM32 = 2,
+    Float32 = 3
+}
+```
+
+## Testing Your Understanding
+
+Create a complete example in `NativeWrapper.App/Program.cs`:
+
+```csharp
+using NativeWrapper.Core.Wrappers;
+using NativeWrapper.Core.Platforms;
+using NativeWrapper.Core.Exceptions;
+using System.Numerics;
+
+namespace NativeWrapper.App;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        Console.WriteLine("🔧 Native Library Wrapper Demo");
+        Console.WriteLine("==============================\n");
+
+        // Demo 1: Platform detection and library loading
+        DemoPlatformDetection();
+
+        // Demo 2: Audio engine with safe wrappers
+        await DemoAudioEngine();
+
+        // Demo 3: Error handling and resource management
+        DemoErrorHandling();
+
+        // Demo 4: Cross-platform compatibility
+        DemoCrossPlatformFeatures();
+
+        Console.WriteLine("\n✅ All demos completed successfully!");
+    }
+
+    static void DemoPlatformDetection()
+    {
+        Console.WriteLine("🖥️  Demo 1: Platform Detection");
+        Console.WriteLine("------------------------------");
+
+        var platform = PlatformDetector.GetCurrentPlatform();
+        Console.WriteLine($"Current platform: {platform}");
+
+        var libraryPath = PlatformDetector.GetNativeLibraryPath("gameaudio");
+        Console.WriteLine($"Audio library path: {libraryPath}");
+
+        var features = new[] { NativeFeature.SIMD, NativeFeature.AVX, NativeFeature.SSE, NativeFeature.ARM_NEON };
+        foreach (var feature in features)
+        {
+            var isSupported = PlatformDetector.IsFeatureSupported(feature);
+            Console.WriteLine($"{feature} support: {isSupported}");
+        }
+
+        Console.WriteLine();
+    }
+
+    static async Task DemoAudioEngine()
+    {
+        Console.WriteLine("🔊 Demo 2: Audio Engine");
+        Console.WriteLine("-----------------------");
+
+        try
+        {
+            var config = new AudioConfiguration
+            {
+                SampleRate = 44100,
+                BufferSize = 1024,
+                Channels = 2,
+                Format = AudioFormatType.Float32
+            };
+
+            config.Validate();
+
+            // Note: This would work with actual native libraries
+            Console.WriteLine("Creating audio engine...");
+            Console.WriteLine($"Configuration: {config.SampleRate}Hz, {config.Channels} channels, {config.Format}");
+
+            // Simulate what would happen with real native libraries
+            Console.WriteLine("✅ Audio engine configuration validated");
+            Console.WriteLine("Would load native audio library and initialize engine");
+
+            // Simulate loading sounds
+            var soundFiles = new[] { "explosion.wav", "music.ogg", "footstep.wav" };
+
+            foreach (var filename in soundFiles)
+            {
+                Console.WriteLine($"Would load sound: {filename}");
+                // In real implementation: var sound = await audioEngine.LoadSoundAsync(filename);
+            }
+
+            Console.WriteLine("Audio demo completed successfully");
+        }
+        catch (Exception ex) when (ex is AudioEngineException || ex is ArgumentException)
+        {
+            Console.WriteLine($"Audio engine error: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    static void DemoErrorHandling()
+    {
+        Console.WriteLine("⚠️  Demo 3: Error Handling");
+        Console.WriteLine("--------------------------");
+
+        // Test configuration validation
+        try
+        {
+            var invalidConfig = new AudioConfiguration
+            {
+                SampleRate = -1, // Invalid
+                BufferSize = 0,  // Invalid
+                Channels = 0     // Invalid
+            };
+
+            Console.WriteLine("Testing invalid configuration...");
+            invalidConfig.Validate();
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"✅ Caught expected validation error: {ex.Message}");
+        }
+
+        // Test resource management
+        Console.WriteLine("\nTesting resource cleanup patterns...");
+
+        var disposables = new List<IDisposable>();
+        try
+        {
+            // Simulate creating multiple resources
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($"Would create native resource {i + 1}");
+                // In real implementation, these would be actual native resources
+            }
+
+            Console.WriteLine("✅ Resource creation simulation completed");
+        }
+        finally
+        {
+            foreach (var disposable in disposables)
+            {
+                disposable?.Dispose();
+            }
+            Console.WriteLine("✅ All resources properly disposed");
+        }
+
+        Console.WriteLine();
+    }
+
+    static void DemoCrossPlatformFeatures()
+    {
+        Console.WriteLine("🌐 Demo 4: Cross-Platform Compatibility");
+        Console.WriteLine("---------------------------------------");
+
+        // Test platform-specific paths
+        var testLibraries = new[] { "gameaudio", "gamegfx", "gamecore" };
+
+        foreach (var library in testLibraries)
+        {
+            try
+            {
+                var path = PlatformDetector.GetNativeLibraryPath(library);
+                var exists = File.Exists(path);
+                Console.WriteLine($"{library}: {path} (exists: {exists})");
+            }
+            catch (PlatformNotSupportedException ex)
+            {
+                Console.WriteLine($"{library}: Platform not supported - {ex.Message}");
+            }
+        }
+
+        // Test architecture detection
+        Console.WriteLine($"\nRuntime information:");
+        Console.WriteLine($"OS: {Environment.OSVersion}");
+        Console.WriteLine($"Architecture: {RuntimeInformation.OSArchitecture}");
+        Console.WriteLine($"Framework: {RuntimeInformation.FrameworkDescription}");
+        Console.WriteLine($"Process Architecture: {RuntimeInformation.ProcessArchitecture}");
+
+        // Test SIMD capabilities
+        Console.WriteLine($"\nSIMD capabilities:");
+        Console.WriteLine($"Vector<T> is supported: {Vector.IsHardwareAccelerated}");
+        Console.WriteLine($"Vector<float> count: {Vector<float>.Count}");
+        Console.WriteLine($"Vector<int> count: {Vector<int>.Count}");
+
+        Console.WriteLine();
+    }
+}
+```
+
+## Extension Challenges
+
+Once you've completed the basic implementation, try these advanced features:
+
+### Challenge 1: COM Interop Support
+
+Add support for COM objects and interfaces:
+
+```csharp
+public interface INativeComObject : IDisposable
+{
+    void QueryInterface(Guid riid, out IntPtr ppvObject);
+    uint AddRef();
+    uint Release();
+}
+```
+
+### Challenge 2: Function Pointer Wrappers
+
+Create type-safe function pointer wrappers:
+
+```csharp
+public unsafe class FunctionPointerWrapper<T> where T : Delegate
+{
+    private readonly IntPtr _functionPointer;
+
+    public T GetDelegate() => Marshal.GetDelegateForFunctionPointer<T>(_functionPointer);
+}
+```
+
+### Challenge 3: Memory-Mapped Interop
+
+Implement shared memory communication:
+
+```csharp
+public class SharedMemoryBuffer : IDisposable
+{
+    public void WriteData<T>(T data, long offset) where T : unmanaged;
+    public T ReadData<T>(long offset) where T : unmanaged;
+}
+```
+
+### Challenge 4: Callback Marshaling
+
+Advanced callback handling with lifetime management:
+
+```csharp
+public class CallbackManager<T> : IDisposable where T : Delegate
+{
+    public void RegisterCallback(T callback, object? userData = null);
+    public void UnregisterCallback(T callback);
+}
+```
+
+### Challenge 5: Dynamic P/Invoke
+
+Runtime P/Invoke generation for dynamic libraries:
+
+```csharp
+public class DynamicPInvoke
+{
+    public T GetFunction<T>(string libraryName, string functionName) where T : Delegate;
+    public void LoadLibrary(string libraryName, string libraryPath);
+}
+```
+
+### Challenge 6: Native String Handling
+
+Comprehensive string marshaling utilities:
+
+```csharp
+public static class NativeStringHelper
+{
+    public static IntPtr ToNativeUtf8(string str);
+    public static string FromNativeUtf8(IntPtr ptr);
+    public static IntPtr ToNativeUtf16(string str);
+    public static string FromNativeUtf16(IntPtr ptr);
+}
+```
+
+### Challenge 7: Platform-Specific Optimizations
+
+Conditional compilation for platform-specific features:
+
+```csharp
+#if WINDOWS
+    [DllImport("kernel32")]
+    private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
+#elif LINUX
+    [DllImport("libc")]
+    private static extern int clock_gettime(int clk_id, out TimeSpec tp);
+#elif MACOS
+    [DllImport("libc")]
+    private static extern ulong mach_absolute_time();
+#endif
+```
+
+## Resources
+
+### Microsoft Documentation
+
+- 📘 **[P/Invoke Documentation](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/pinvoke)** - Platform invoke fundamentals
+- 📘 **[Unsafe Code](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/unsafe-code)** - Unsafe code and pointers
+- 📘 **[Custom Marshaling](https://learn.microsoft.com/en-us/dotnet/framework/interop/custom-marshaling)** - Advanced marshaling techniques
+- 📘 **[SafeHandle](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.safehandle)** - Safe native resource management
+- 📘 **[Native Library Loading](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/deployment-overview)** - Cross-platform deployment
+
+### Interop Resources
+
+- 📚 **[PInvoke.net](https://pinvoke.net/)** - P/Invoke signature database
+- 📚 **[Interop Patterns](https://docs.microsoft.com/en-us/dotnet/standard/native-interop/)** - Best practices guide
+- 📚 **[Cross-Platform Development](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog)** - Runtime identifier catalog
+
+## Building on Previous Projects
+
+This project integrates concepts from:
+
+- **Projects 1-5**: All foundational .NET skills applied to native interop
+- **Projects 6-8**: Async patterns and resource management for native operations
+- **Projects 9-12**: Advanced patterns applied to native wrappers
+- **Project 13**: Reflection for dynamic native library discovery
+- **Project 14**: Expression trees for optimized marshaling
+- **Project 15**: Memory management for native data buffers
+- **Next Projects**: These interop techniques enable the final advanced projects
+
 ## Advanced Interop Patterns
 
-This project explores sophisticated native interop scenarios:
+This project demonstrates sophisticated native interop:
 
-- **Custom Marshaling**: Implementing ICustomMarshaler for complex types
-- **Function Pointers**: Using delegate types for native callbacks
-- **COM Interop**: Working with COM objects and interfaces
-- **Memory-Mapped Files**: Sharing data between native and managed code
-- **Platform-Specific Code**: Conditional compilation for different platforms
+- **Safe Resource Management**: Using SafeHandle types for automatic cleanup
+- **Custom Marshaling**: Implementing ICustomMarshaler for complex data types
+- **Cross-Platform Compatibility**: Writing portable interop code
+- **Error Translation**: Converting native errors to managed exceptions
+- **Performance Optimization**: Minimizing marshaling overhead
+- **Security Considerations**: Validating native inputs and preventing exploits
 
-## Safety and Performance
-
-Critical considerations for native interop:
-
-- **Memory Safety**: Preventing buffer overruns and use-after-free
-- **Exception Safety**: Handling exceptions across native boundaries
-- **Resource Management**: Ensuring proper cleanup of native resources
-- **Performance**: Minimizing marshaling overhead
-- **Thread Safety**: Managing concurrency across interop boundaries
-
-## Contributing
-
-When implementing this project:
-
-1. Use safe patterns for all native interop operations
-2. Implement proper resource management with disposable patterns
-3. Handle platform differences gracefully
-4. Write comprehensive tests including error scenarios
-5. Document native dependencies and platform requirements
+The skills learned here are essential for building high-performance applications that integrate with native libraries, game engines, and system APIs.
