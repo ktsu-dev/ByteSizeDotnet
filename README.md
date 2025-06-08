@@ -219,14 +219,14 @@ Access detailed guides for each project in the curriculum:
 
 ### Phase 1: .NET Fundamentals & Idioms
 
-- **[Project 1: Dice Rolling Library](./project-01-dice-roller/dice-roller-project-guide.md)** - .NET Type System & Conventions
-- **[Project 2: Card Deck Shuffler](./project-02-card-deck/card-deck-project-guide.md)** - Collections & Enumerables
-- **[Project 3: String Processing Utilities](./project-03-string-utilities/string-utilities-project-guide.md)** - Extension Methods & Fluent APIs
-- **[Project 4: Turn-Based Game State Machine](./project-04-state-machine/state-machine-project-guide.md)** - Pattern Matching & Switch Expressions
+- **[Project 1: Dice Rolling Library](project-01-dice-roller/dice-roller-project-guide.md)** - .NET Type System & Conventions
+- **[Project 2: Card Deck Shuffler](project-02-card-deck/card-deck-project-guide.md)** - Collections & Enumerables
+- **[Project 3: String Processing Utilities](project-03-string-utilities/string-utilities-project-guide.md)** - Extension Methods & Fluent APIs
+- **[Project 4: Turn-Based Game State Machine](project-04-state-machine/state-machine-project-guide.md)** - Pattern Matching & Switch Expressions
 
 ### Phase 2: Advanced Language Features
 
-- **[Project 5: Game Statistics Analyzer](./project-05-statistics-analyzer/statistics-analyzer-project-guide.md)** - LINQ & Deferred Execution
+- **[Project 5: Game Statistics Analyzer](project-05-statistics-analyzer/statistics-analyzer-project-guide.md)** - LINQ & Deferred Execution
 
 _Additional project guides will be added as the curriculum expands._
 
@@ -285,7 +285,7 @@ Each project folder contains:
 
 Before diving into the projects, familiarize yourself with these essential reference documents:
 
-### 🚀 [Quick Reference Guide](./quick-reference.md)
+### 🚀 [Quick Reference Guide](quick-reference.md)
 
 **Keep this open while coding!** Comprehensive cheat sheet covering:
 
@@ -296,7 +296,7 @@ Before diving into the projects, familiarize yourself with these essential refer
 - Extension methods and fluent API design
 - Direct links to Microsoft documentation for every topic
 
-### 📈 [Progress Tracker](./progress-tracker.md)
+### 📈 [Progress Tracker](progress-tracker.md)
 
 **Track your learning journey** with detailed checklists for:
 
@@ -306,7 +306,7 @@ Before diving into the projects, familiarize yourself with these essential refer
 - Portfolio building milestones
 - NuGet package publication goals
 
-### 🏗️ [Microsoft Design Guidelines](./dotnet-design-guidelines.md)
+### 🏗️ [Microsoft Design Guidelines](dotnet-design-guidelines.md)
 
 **Build professional-quality code** following Microsoft's official standards:
 
@@ -319,7 +319,7 @@ Before diving into the projects, familiarize yourself with these essential refer
 - Framework design patterns (Builder, Factory, etc.)
 - Links to all official Microsoft design documentation
 
-### 📖 [.NET Glossary](./dotnet-glossary.md)
+### 📖 [.NET Glossary](dotnet-glossary.md)
 
 **Master the terminology!** Comprehensive reference covering:
 
@@ -333,12 +333,12 @@ Before diving into the projects, familiarize yourself with these essential refer
 
 ### Quick Navigation
 
-- 💡 **New to .NET?** Start with the [Quick Reference Guide](./quick-reference.md)
-- 🎯 **Track Progress?** Use the [Progress Tracker](./progress-tracker.md)
-- 🏗️ **Writing Library Code?** Follow the [Design Guidelines](./dotnet-design-guidelines.md)
-- 📖 **Need Definitions?** Check the [.NET Glossary](./dotnet-glossary.md)
-- 🎮 **Ready to Code?** Begin with [Project 1: Dice Rolling Library](./project-01-dice-roller/dice-roller-project-guide.md)
+- 💡 **New to .NET?** Start with the [Quick Reference Guide](quick-reference.md)
+- 🎯 **Track Progress?** Use the [Progress Tracker](progress-tracker.md)
+- 🏗️ **Writing Library Code?** Follow the [Design Guidelines](dotnet-design-guidelines.md)
+- 📖 **Need Definitions?** Check the [.NET Glossary](dotnet-glossary.md)
+- 🎮 **Ready to Code?** Begin with [Project 1: Dice Rolling Library](project-01-dice-roller/dice-roller-project-guide.md)
 
 ---
 
-**Ready to start your .NET journey? Begin with [Project 1: Dice Rolling Library](./project-01-dice-roller/dice-roller-project-guide.md)!** 🎲
+**Ready to start your .NET journey? Begin with [Project 1: Dice Rolling Library](project-01-dice-roller/dice-roller-project-guide.md)!** 🎲
