@@ -243,9 +243,6 @@ The README should also have a "Learning Support" section, with the following con
         *   The above lists are now deprecated as all projects should now fit the complete projects structure.
 
 *   **Updating READMEs for Implementation Guidance:** All projects should have comprehensive, self-contained READMEs with detailed implementation guides. The following projects currently need to be expanded to provide complete implementation guidance:
-    *   Project 10 (Dungeon Generator) - Builder & Factory Patterns
-    *   Project 11 (Input Manager) - Command Pattern
-    *   Project 12 (Asset Manager) - Repository & Unit of Work
     *   Project 13 (Configuration System) - Reflection & Attributes
     *   Project 14 (Dynamic Query Builder) - Expression Trees
     *   Project 15 (Game Buffer) - Memory Management & Spans
@@ -720,6 +717,7 @@ ClientBin/
 *~
 *.dbmdl
 *.dbproj.schemaview
+*.jfm
 *.pfx
 *.publishsettings
 orleans.codegen.cs
@@ -817,3 +815,13 @@ ASALocalRun/
 .obsidian/workspace.json
 
 ```
+
+*   **Updating READMEs for Implementation Guidance:** All projects should have comprehensive, self-contained READMEs with detailed implementation guides. The following projects currently need to be expanded to provide complete implementation guidance:
+    *   Project 13 (Configuration System) - Reflection & Attributes
+    *   Project 14 (Dynamic Query Builder) - Expression Trees
+    *   Project 15 (Game Buffer) - Memory Management & Spans
+    *   Project 16 (Native Wrapper) - Unsafe Code & Interop
+    *   Project 17 (Game Engine) - System Integration
+    *   Project 19 (Modding Framework) - Plugin Architecture.
+
+*   **Library Projects should have App Projects:** For projects where the intention is to make a library, always include an App project to demo the functionality. **The App projects should contain just the project structure (folders and .csproj files) for the App demo projects, not the actual implementation code.**

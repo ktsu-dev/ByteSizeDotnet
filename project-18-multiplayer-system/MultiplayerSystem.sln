@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiplayerSystem.Core", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiplayerSystem.Tests", "MultiplayerSystem.Tests\MultiplayerSystem.Tests.csproj", "{FC6AAF79-0733-423D-82F6-339C7512105C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiplayerSystem.App", "MultiplayerSystem.App\MultiplayerSystem.App.csproj", "{78A0DF47-090B-4D35-9608-0373C503CBCE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{FC6AAF79-0733-423D-82F6-339C7512105C}.Release|x64.Build.0 = Release|Any CPU
 		{FC6AAF79-0733-423D-82F6-339C7512105C}.Release|x86.ActiveCfg = Release|Any CPU
 		{FC6AAF79-0733-423D-82F6-339C7512105C}.Release|x86.Build.0 = Release|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Debug|x64.Build.0 = Debug|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Debug|x86.Build.0 = Debug|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Release|x64.ActiveCfg = Release|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Release|x64.Build.0 = Release|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Release|x86.ActiveCfg = Release|Any CPU
+		{78A0DF47-090B-4D35-9608-0373C503CBCE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
