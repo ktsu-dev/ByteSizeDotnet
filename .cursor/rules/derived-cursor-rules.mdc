@@ -88,15 +88,6 @@ When creating .NET learning curricula, prioritize the following:
     *   A prominent "Essential Resources" section highlighting Microsoft guidelines
     *   Quick navigation with clear callouts to design guidelines
     *   A "Getting started" workflow that references guidelines early
-*   Each README.md should include:
-    *   **Microsoft Guidelines Applied** section linking to relevant design guidelines
-    *   **Learning Objectives** clearly defined
-    *   **Quick Start** workflow referencing guidelines early
-    *   **Project Structure** visual representation
-    *   **Building on Previous Projects** showing curriculum progression
-    *   **Resources** with documentation links
-    *   **Example Usage** showing expected patterns
-    *   **Contributing** guidelines for implementation
 
 The "Essential Resources" section should be formatted as follows:
 
