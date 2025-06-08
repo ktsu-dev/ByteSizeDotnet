@@ -241,12 +241,479 @@ public class ModSecurityManager : ISecurityManager
         }
     }
 }
+```
+
+## Project Setup Instructions
+
+### Step 1: Create the Solution Structure (15 minutes)
+
+Navigate to the `project-19-modding-framework/` directory:
+
+```bash
+# Create the main solution file
+dotnet new sln -n ModdingFramework
+
+# Create the main library project
+dotnet new classlib -n ModdingFramework.Core -f net8.0
+
+# Create the console application
+dotnet new console -n ModdingFramework.App -f net8.0
+
+# Create the test project
+dotnet new mstest -n ModdingFramework.Tests -f net8.0
+
+# Add projects to solution
+dotnet sln add ModdingFramework.Core/ModdingFramework.Core.csproj
+dotnet sln add ModdingFramework.App/ModdingFramework.App.csproj
+dotnet sln add ModdingFramework.Tests/ModdingFramework.Tests.csproj
+
+# Add project references
+dotnet add ModdingFramework.App/ModdingFramework.App.csproj reference ModdingFramework.Core/ModdingFramework.Core.csproj
+dotnet add ModdingFramework.Tests/ModdingFramework.Tests.csproj reference ModdingFramework.Core/ModdingFramework.Core.csproj
+```
+
+### Step 2: Configure Project Dependencies
+
+Update `ModdingFramework.Core.csproj` to include necessary packages:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>ModdingFramework.Core</PackageId>
+    <Title>Extensible Modding Framework</Title>
+    <Description>A comprehensive framework for game modding and extensibility</Description>
+    <Authors>Your Name</Authors>
+    <Copyright>Copyright (c) 2024</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+    <PackageReference Include="System.Reflection.Metadata" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+    <PackageReference Include="McMaster.NETCore.Plugins" Version="1.4.0" />
+  </ItemGroup>
+
+</Project>
+```
+
+### Step 3: Create Directory Structure
+
+Create the necessary directories for the modding framework:
+
+```bash
+mkdir ModdingFramework.Core/Core
+mkdir ModdingFramework.Core/API
+mkdir ModdingFramework.Core/Loader
+mkdir ModdingFramework.Core/Security
+mkdir ModdingFramework.Core/Tools
+mkdir ModdingFramework.Core/Compiler
+mkdir ModdingFramework.Core/Package
+mkdir ModdingFramework.Core/Events
+mkdir ModdingFramework.Core/Models
+```
+
+## Implementation Guide
+
+### Step 4: Core Framework Infrastructure (30 minutes)
+
+**ModdingFramework.Core/Models/ModModels.cs**
+
+```csharp
+using System.Text.Json.Serialization;
+
+namespace ModdingFramework.Core.Models;
+
+public enum ModState
+{
+    Unloaded,
+    Loading,
+    Initializing,
+    Active,
+    Paused,
+    Failed,
+    Unloading
+}
+
+public enum ModType
+{
+    Gameplay,
+    Content,
+    UI,
+    Tool,
+    Integration
+}
+
+public class ModInfo
+{
+    public string Name { get; set; } = string.Empty;
+    public string Id { get; set; } = string.Empty;
+    public Version Version { get; set; } = new(1, 0);
+    public string Description { get; set; } = string.Empty;
+    public string Author { get; set; } = string.Empty;
+    public ModType Type { get; set; }
+    public string[] Tags { get; set; } = Array.Empty<string>();
+    public Dictionary<string, string> Metadata { get; set; } = new();
+
+    [JsonIgnore]
+    public string AssemblyPath { get; set; } = string.Empty;
+    [JsonIgnore]
+    public string ModDirectory { get; set; } = string.Empty;
+}
+
+public class ModDependency
+{
+    public string ModId { get; set; } = string.Empty;
+    public Version MinVersion { get; set; } = new(1, 0);
+    public Version? MaxVersion { get; set; }
+    public bool IsOptional { get; set; }
+}
+
+public class ModPermission
+{
+    public string Permission { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public PermissionLevel Level { get; set; }
+}
+
+public enum PermissionLevel
+{
+    None,
+    Read,
+    Write,
+    Execute,
+    Full
+}
+
+public class ModPackage
+{
+    public ModInfo Info { get; set; } = new();
+    public ModDependency[] Dependencies { get; set; } = Array.Empty<ModDependency>();
+    public ModPermission[] RequiredPermissions { get; set; } = Array.Empty<ModPermission>();
+    public Version ApiVersion { get; set; } = new(1, 0);
+    public string MainAssembly { get; set; } = string.Empty;
+    public Dictionary<string, string> Assets { get; set; } = new();
+    public DateTime PackageDate { get; set; } = DateTime.UtcNow;
+    public string PackageHash { get; set; } = string.Empty;
+
+    public static async Task<ModPackage> LoadFromAsync(string packagePath)
+    {
+        var manifestPath = Path.Combine(packagePath, "mod.json");
+        if (!File.Exists(manifestPath))
+            throw new FileNotFoundException("Mod manifest not found");
+
+        var json = await File.ReadAllTextAsync(manifestPath);
+        var package = JsonSerializer.Deserialize<ModPackage>(json) ?? new ModPackage();
+
+        // Set paths
+        package.Info.ModDirectory = packagePath;
+        package.Info.AssemblyPath = Path.Combine(packagePath, package.MainAssembly);
+
+        return package;
+    }
+}
+```
+
+### Step 5: Complete Demo Application (30 minutes)
+
+**ModdingFramework.App/Program.cs**
+
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ModdingFramework.Core.Core;
+using ModdingFramework.Core.API;
+using ModdingFramework.Core.Loader;
+using ModdingFramework.Core.Security;
+using ModdingFramework.Core.Tools;
+
+namespace ModdingFramework.App;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        Console.WriteLine("🎮 Modding Framework Demo");
+        Console.WriteLine("========================\n");
+
+        // Setup dependency injection
+        var services = new ServiceCollection();
+        ConfigureServices(services);
+
+        using var serviceProvider = services.BuildServiceProvider();
+        var framework = serviceProvider.GetRequiredService<IModdingFramework>();
+        var hotReloadManager = serviceProvider.GetRequiredService<IHotReloadManager>();
+
+        try
+        {
+            // Demo: Load sample mods
+            await DemoBasicModLoadingAsync(framework);
+
+            // Demo: Hot reloading
+            await DemoHotReloadingAsync(framework, hotReloadManager);
+
+            // Demo: Security validation
+            await DemoSecurityValidationAsync(framework);
+
+            Console.WriteLine("\n✅ All demos completed successfully!");
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"\n❌ Demo failed: {ex.Message}");
+            Console.WriteLine($"Stack trace: {ex.StackTrace}");
+        }
+    }
+
+    private static void ConfigureServices(ServiceCollection services)
+    {
+        services.AddLogging(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Information));
+
+        // Register framework services
+        services.AddSingleton<IAssemblyLoader, AssemblyLoader>();
+        services.AddSingleton<ISecurityManager, SecurityManager>();
+        services.AddSingleton<IModRegistry, ModRegistry>();
+        services.AddSingleton<IHotReloadManager, HotReloadManager>();
+        services.AddSingleton<IEventBus, SimpleEventBus>();
+
+        // Register API implementations (mocked for demo)
+        services.AddSingleton<IEntityManager, MockEntityManager>();
+        services.AddSingleton<IAssetLoader, MockAssetLoader>();
+        services.AddSingleton<IGameState, MockGameState>();
+        services.AddSingleton<IConfigurationManager, MockConfigurationManager>();
+        services.AddSingleton<IInputManager, MockInputManager>();
+        services.AddSingleton<IAudioManager, MockAudioManager>();
+        services.AddSingleton<INetworkManager, MockNetworkManager>();
+
+        services.AddSingleton<IGameModApi>(provider =>
+        {
+            var logger = provider.GetRequiredService<ILogger<GameModApiImplementation>>();
+            return new GameModApiImplementation(
+                provider.GetRequiredService<IEntityManager>(),
+                provider.GetRequiredService<IEventBus>(),
+                provider.GetRequiredService<IAssetLoader>(),
+                provider.GetRequiredService<IGameState>(),
+                logger,
+                provider.GetRequiredService<IConfigurationManager>(),
+                provider.GetRequiredService<IInputManager>(),
+                provider.GetRequiredService<IAudioManager>(),
+                provider.GetRequiredService<INetworkManager>()
+            );
+        });
+
+        services.AddSingleton<IModdingFramework, ModdingFrameworkImplementation>();
+    }
+
+    private static async Task DemoBasicModLoadingAsync(IModdingFramework framework)
+    {
+        Console.WriteLine("📦 Demo: Basic Mod Loading");
+        Console.WriteLine("==========================");
+
+        // Create a sample mod package in memory for demo
+        var sampleModPath = CreateSampleMod();
+
+        try
+        {
+            var loadResult = await framework.LoadModAsync(sampleModPath);
+
+            if (loadResult.Success)
+            {
+                Console.WriteLine($"✅ Successfully loaded mod: {loadResult.ModId}");
+
+                var loadedMod = framework.GetLoadedMod(loadResult.ModId);
+                if (loadedMod != null)
+                {
+                    Console.WriteLine($"   - Name: {loadedMod.Info.Name}");
+                    Console.WriteLine($"   - Version: {loadedMod.Info.Version}");
+                    Console.WriteLine($"   - Author: {loadedMod.Info.Author}");
+                    Console.WriteLine($"   - State: {loadedMod.State}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"❌ Failed to load mod: {loadResult.ErrorMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Exception during mod loading: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    private static async Task DemoHotReloadingAsync(IModdingFramework framework, IHotReloadManager hotReloadManager)
+    {
+        Console.WriteLine("🔥 Demo: Hot Reloading");
+        Console.WriteLine("======================");
+
+        var modPath = CreateSampleMod();
+
+        // Enable hot reloading
+        await hotReloadManager.EnableHotReloadingAsync(modPath);
+
+        // Subscribe to reload events
+        hotReloadManager.ModReloaded += (s, e) =>
+        {
+            Console.WriteLine($"✅ Mod reloaded: {e.ModPath}");
+        };
+
+        hotReloadManager.ModReloadFailed += (s, e) =>
+        {
+            Console.WriteLine($"❌ Mod reload failed: {e.Exception.Message}");
+        };
+
+        Console.WriteLine($"Hot reloading enabled for: {modPath}");
+        Console.WriteLine("Modify source files to trigger reload...");
+        Console.WriteLine("(Simulation - would watch for file changes in real implementation)");
+
+        // Simulate file change (in real implementation, this would be triggered by FileSystemWatcher)
+        await Task.Delay(1000);
+        Console.WriteLine("📝 Simulated file change detected");
+
+        Console.WriteLine();
+    }
+
+    private static async Task DemoSecurityValidationAsync(IModdingFramework framework)
+    {
+        Console.WriteLine("🔒 Demo: Security Validation");
+        Console.WriteLine("============================");
+
+        // Create a mod with high-risk permissions
+        var riskyModPath = CreateRiskyMod();
+
+        try
+        {
+            var loadResult = await framework.LoadModAsync(riskyModPath);
+            Console.WriteLine($"Load result: {(loadResult.Success ? "Success" : "Failed")}");
+
+            if (!loadResult.Success)
+            {
+                Console.WriteLine($"Rejection reason: {loadResult.ErrorMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Security validation blocked mod: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    private static string CreateSampleMod()
+    {
+        var tempDir = Path.Combine(Path.GetTempPath(), "SampleMod_" + Guid.NewGuid().ToString("N")[..8]);
+        Directory.CreateDirectory(tempDir);
+
+        // Create mod manifest
+        var manifest = new ModPackage
+        {
+            Info = new ModInfo
+            {
+                Name = "Sample Gameplay Mod",
+                Id = "sample.gameplay.mod",
+                Version = new Version(1, 0),
+                Description = "A sample mod for demonstration",
+                Author = "Demo Author",
+                Type = ModType.Gameplay
+            },
+            Dependencies = Array.Empty<ModDependency>(),
+            RequiredPermissions = new[]
+            {
+                new ModPermission { Permission = "GameplayAccess", Level = PermissionLevel.Read }
+            },
+            ApiVersion = new Version(1, 0),
+            MainAssembly = "SampleMod.dll"
+        };
+
+        var manifestPath = Path.Combine(tempDir, "mod.json");
+        var manifestJson = JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(manifestPath, manifestJson);
+
+        // Create sample mod source code
+        var sourceCode = @"
+using ModdingFramework.Core.API;
+using ModdingFramework.Core.Models;
+
+public class SampleGameplayMod : GameMod
+{
+    protected override async Task OnInitializeAsync()
+    {
+        Api.Logger.LogInformation(""Sample Gameplay Mod initialized!"");
+
+        // Subscribe to game events
+        RegisterEventHandler<PlayerJoinedEvent>(OnPlayerJoined);
+
+        await Task.CompletedTask;
+    }
+
+    private void OnPlayerJoined(PlayerJoinedEvent evt)
+    {
+        Api.Logger.LogInformation($""Player {evt.PlayerName} joined the game!"");
+    }
+}
+
+public class PlayerJoinedEvent : IGameEvent
+{
+    public string PlayerName { get; set; } = string.Empty;
+    public DateTime Timestamp { get; set; }
+    public Guid EventId { get; set; }
+}
+";
+
+        var sourcePath = Path.Combine(tempDir, "SampleMod.cs");
+        File.WriteAllText(sourcePath, sourceCode);
+
+        return tempDir;
+    }
+
+    private static string CreateRiskyMod()
+    {
+        var tempDir = Path.Combine(Path.GetTempPath(), "RiskyMod_" + Guid.NewGuid().ToString("N")[..8]);
+        Directory.CreateDirectory(tempDir);
+
+        var manifest = new ModPackage
+        {
+            Info = new ModInfo
+            {
+                Name = "Risky Mod",
+                Id = "risky.mod",
+                Version = new Version(1, 0),
+                Description = "A mod with high-risk permissions",
+                Author = "Unknown",
+                Type = ModType.Tool
+            },
+            RequiredPermissions = new[]
+            {
+                new ModPermission { Permission = "FileAccess", Level = PermissionLevel.Full },
+                new ModPermission { Permission = "NetworkAccess", Level = PermissionLevel.Full }
+            },
+            ApiVersion = new Version(1, 0),
+            MainAssembly = "RiskyMod.dll"
+        };
+
+        var manifestPath = Path.Combine(tempDir, "mod.json");
+        var manifestJson = JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(manifestPath, manifestJson);
+
+        return tempDir;
+    }
+}
+```
 
 // Runtime compilation for hot reloading
 public class ModCompiler : IModCompiler
 {
-    private readonly CSharpCompilation _baseCompilation;
-    private readonly Dictionary<string, CompilationReference> _references;
+private readonly CSharpCompilation \_baseCompilation;
+private readonly Dictionary<string, CompilationReference> \_references;
 
     public async Task<CompilationResult> CompileModAsync(string sourceCode, ModManifest manifest)
     {
@@ -276,14 +743,15 @@ public class ModCompiler : IModCompiler
 
         return CompilationResult.Success(peStream.ToArray(), pdbStream.ToArray());
     }
+
 }
 
 // Mod package management
 public class ModPackageManager : IModPackageManager
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _repositoryUrl;
-    private readonly Dictionary<string, ModPackage> _installedMods;
+private readonly HttpClient \_httpClient;
+private readonly string \_repositoryUrl;
+private readonly Dictionary<string, ModPackage> \_installedMods;
 
     public async Task<InstallResult> InstallModAsync(string modId, string version = "latest")
     {
@@ -319,8 +787,10 @@ public class ModPackageManager : IModPackageManager
 
         return InstallResult.Success(modPath);
     }
+
 }
-```
+
+````
 
 ## Key Features
 
@@ -361,7 +831,7 @@ public class VisualModEditor
         // Real-time preview and testing
     }
 }
-```
+````
 
 **Requirements:**
 
