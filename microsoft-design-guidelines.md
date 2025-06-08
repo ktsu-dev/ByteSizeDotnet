@@ -662,7 +662,7 @@ public class SaveManager { public void SaveGame() { } }
 
 - [Performance Best Practices](https://docs.microsoft.com/en-us/dotnet/framework/performance/performance-tips) - Performance optimization tips
 - [Memory Management](https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/optimization-for-shared-web-hosting) - GC optimization
-- [Span<T> and Memory<T>](https://docs.microsoft.com/en-us/dotnet/standard/memory-and-spans/memory-t-usage-guidelines) - High-performance memory usage
+- [Span\<T\> and Memory\<T\>](https://docs.microsoft.com/en-us/dotnet/standard/memory-and-spans/memory-t-usage-guidelines) - High-performance memory usage
 
 ### Security Guidelines
 
