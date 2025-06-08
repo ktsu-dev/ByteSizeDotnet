@@ -202,98 +202,53 @@ _Comprehensive terminology reference for .NET development_
 
 **Sealed Class** - A class that cannot be inherited from.
 
-**Selector** - A function that transforms or projects data from one form to another, commonly used with LINQ (`Func<T, TResult>`).
-
 **Serialization** - The process of converting an object into a format that can be stored or transmitted.
 
-**SOLID Principles** - Five design principles for writing maintainable object-oriented code.
+**Span\<T>** - A type-safe and memory-efficient representation of a contiguous region of arbitrary memory.
 
-**Stack** - The memory area where value types and method call information are stored.
+**Stack** - The memory area where method parameters, local variables, and return addresses are stored.
 
-**Static** - A modifier indicating that a member belongs to the type rather than to instances.
+**Static** - A keyword indicating that a member belongs to the type itself rather than to instances.
 
-**String** - An immutable reference type representing text.
+**String Interpolation** - A feature that allows embedding expressions in string literals using `$"Hello {name}"`.
 
-**Struct** - A value type that typically represents a simple data structure.
+**Struct** - A value type that can contain constructors, constants, fields, methods, properties, indexers, and events.
 
 ## 🔤 T
 
-**Task\<T>** - A type representing an asynchronous operation that returns a result.
+**Task\<T>** - Represents an asynchronous operation that can return a value.
 
 **Thread** - A unit of execution within a process.
 
-**Type** - A classification that determines what values a variable can hold and operations that can be performed.
+**Tuple** - A data structure that can hold multiple values of different types.
 
-**Type Parameter** - A placeholder for a type in generic classes and methods (e.g., `T` in `List<T>`).
+**Type Parameter** - A placeholder for a specific type in generic types and methods (e.g., `T` in `List<T>`).
 
 ## 🔤 U
 
-**Unboxing** - The process of converting a reference type back to a value type.
+**Unboxing** - The process of extracting a value type from an object.
 
-**Unmanaged Code** - Code that runs outside the .NET runtime (native code).
+**Unmanaged Code** - Code that runs outside the control of the .NET runtime.
 
 **Using Statement** - A statement that ensures proper disposal of resources implementing `IDisposable`.
 
 ## 🔤 V
 
-**Value Type** - A type whose variables directly contain their data (stored on the stack or inline).
+**Value Type** - A type whose variables contain their data directly (stored on stack or inline).
 
-**Variable** - A named storage location that holds a value.
+**var** - A keyword that allows the compiler to infer the type of a variable.
 
 **Virtual Method** - A method that can be overridden in derived classes.
 
-**Void** - A keyword indicating that a method doesn't return a value.
-
 ## 🔤 W
 
-**WIQL (Work Item Query Language)** - Query language used in Azure DevOps (if applicable to project context).
-
-## 🔤 X
-
-**XML Documentation** - Special comments that provide documentation for types and members.
-
-## 🔤 Y
-
-**YAML** - A human-readable data serialization standard often used for configuration files.
-
-**Yield** - A keyword used to create iterators that return values one at a time.
+**Weak Reference** - A reference that allows the garbage collector to collect an object while still allowing access to it.
 
 ---
 
-## 📖 Related Documentation
+## 🔗 Related Resources
 
-### Language Reference
-
-- [C# Keywords](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/) - Complete keyword reference
-- [C# Operators](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/) - All C# operators
-- [Built-in Types](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/built-in-types) - Primitive types reference
-
-### Type System
-
-- [Classes](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes) - Class fundamentals
-- [Structs](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/struct) - Value type fundamentals
-- [Interfaces](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces) - Interface concepts
-- [Generics](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/) - Generic programming
-
-### Memory and Performance
-
-- [Memory Management](https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/) - Garbage collection concepts
-- [Value vs Reference Types](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types) - Memory allocation
-- [Span<T> and Memory<T>](https://docs.microsoft.com/en-us/dotnet/standard/memory-and-spans/) - High-performance memory
-
-### Advanced Features
-
-- [Async Programming](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/) - Asynchronous patterns
-- [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) - Language Integrated Query
-- [Reflection](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection) - Runtime type inspection
-- [Attributes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/) - Metadata programming
-
-### Ecosystem
-
-- [NuGet](https://docs.microsoft.com/en-us/nuget/) - Package management
-- [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) - Command-line tools
-- [Project Files](https://docs.microsoft.com/en-us/dotnet/core/project-sdk/overview) - Modern project format
-
----
-
-_Use this glossary alongside the [Quick Reference Guide](./quick-reference.md) and [Design Guidelines](./dotnet-design-guidelines.md) for comprehensive .NET learning!_ 📚
+- **[Language Essentials](../language-essentials.md)** - Core concepts with examples
+- **[Microsoft Design Guidelines](../microsoft-design-guidelines.md)** - Official design patterns
+- **[Quick Syntax Reference](quick-syntax.md)** - Syntax examples and patterns
+- **[Language Comparison](language-comparison.md)** - How .NET maps to other languages

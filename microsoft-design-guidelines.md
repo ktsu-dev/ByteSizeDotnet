@@ -2,6 +2,16 @@
 
 _Comprehensive reference for building well-designed .NET libraries and applications_
 
+## 🎯 Quick Navigation by Curriculum Project
+
+**Use this guide while working on curriculum projects:**
+
+- **Projects 1-4**: [Naming Conventions](#basic-naming-rules), [Type Design](#type-design-guidelines)
+- **Projects 5-8**: [Collection Design](#collection-design), [Async Patterns](#async-await-design)
+- **Projects 9-12**: [Interface Design](#interface-design), [Design Patterns](#design-patterns)
+- **Projects 13-16**: [Advanced Features](#advanced-net-features), [Performance](#performance-guidelines)
+- **Projects 17-20**: [Testing](#testing-guidelines), [Package Design](#package-design)
+
 ## 📏 Official Naming Conventions
 
 ### Basic Naming Rules
