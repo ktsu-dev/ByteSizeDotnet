@@ -190,9 +190,9 @@ _Understanding how .NET maps to other programming languages_
 
 **.NET distinguishes** between fixed arrays (`T[]`) and dynamic collections (`List<T>`), similar to Java but unlike JavaScript where `Array` is always dynamic.
 
-### Span<T>
+### Span\<T\>
 
-**Span<T>** provides zero-allocation slicing over memory, similar to Rust's slices (`&[T]`) or C++20's `std::span`, but unique among managed languages.
+**Span\<T\>** provides zero-allocation slicing over memory, similar to Rust's slices (`&[T]`) or C++20's `std::span`, but unique among managed languages.
 
 ### Namespaces
 

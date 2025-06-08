@@ -108,15 +108,6 @@ After completing the 20 core projects, choose a capstone project:
 
 ---
 
-## Project Structure
-
-Each project folder contains:
-
-- **README.md** - Project overview and requirements
-- **src/** - Implementation code
-- **tests/** - Unit tests (when applicable)
-- **docs/** - Project-specific documentation
-
 ## Contributing
 
 This curriculum is open for contributions! See individual project folders for specific contribution guidelines.
