@@ -560,7 +560,7 @@ The README should also have a "Learning Support" section, with the following con
         ├── GameEngine.App/
         └── GameEngine.Tests/
         ```
-    *   **Project 18 (Unit Testing & Mocking)**:
+    *   **Project 18 (Multiplayer System)**:
         *   **✅ Template Available**: Pre-configured solution with `MultiplayerSystem.Core`, `MultiplayerSystem.App`, and `MultiplayerSystem.Tests` projects.
         *   **Directory Structure**: `project-18-multiplayer-system/`
         ```
@@ -586,3 +586,4 @@ The README should also have a "Learning Support" section, with the following con
         ```
         project-20-performance-profiler/
         ├── PerformanceProfiler.sln
+</rules
