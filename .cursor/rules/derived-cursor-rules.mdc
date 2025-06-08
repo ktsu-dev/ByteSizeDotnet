@@ -15,6 +15,8 @@ globs: *
 
 ## CODING STANDARDS
 
+*   Ensure all csproj files, especially in test projects, have uniform settings.
+
 ## WORKFLOW & RELEASE RULES
 
 ## DEBUGGING
@@ -226,6 +228,8 @@ The README should also have a "Learning Support" section, with the following con
         *   For projects where the intention is to make a library, include an App project to demo the functionality.
 
 *   **Library Projects should have App Projects:** For projects where the intention is to make a library, always include an App project to demo the functionality.
+
+*   **Library Projects should have App Projects:** For projects where the intention is to make a library, always include an App project to demo the functionality. **The App projects should contain just the project structure (folders and .csproj files) for the App demo projects, not the actual implementation code.**
 
 *   **Empty Directories:** All empty `docs` and `tests` directories should be removed from the project structure. These directories will not be included in template projects.
 
@@ -491,14 +495,6 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
-# Including strong name files can present a security risk
-# (https://github.com/github/gitignore/pull/2483#issue-259490424)
-#*.snk
-
-# Since there are multiple workflows, uncomment next line to ignore bower_components
-# (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
-#bower_components/
-
 # RIA/Silverlight projects
 Generated_Code/
 
@@ -521,7 +517,6 @@ CConversionReportOutput_*.txt
 *.rdl.data
 *.bim.layout
 *.bim_*.settings
-*.rptproj.rsuser
 *- [Bb]ackup.rdl
 *- [Bb]ackup ([0-9]).rdl
 *- [Bb]ackup ([0-9][0-9]).rdl
@@ -582,7 +577,7 @@ __pycache__/
 # tools/**
 # !tools/packages.config
 
-# Tabs Studio
+# Tabs Studio Studio
 *.tss
 
 # Telerik's JustMock configuration file
@@ -816,12 +811,14 @@ ASALocalRun/
 
 ```
 
+*   **README Status Summary (2025-06-08):**
+    *   **Complete Implementation Guides (14 projects):** Projects 1-9, Projects 10-12, Projects 18, 20
+    *   **Placeholder READMEs (6 projects):** Projects 13-17, Project 19
+
 *   **Updating READMEs for Implementation Guidance:** All projects should have comprehensive, self-contained READMEs with detailed implementation guides. The following projects currently need to be expanded to provide complete implementation guidance:
     *   Project 13 (Configuration System) - Reflection & Attributes
     *   Project 14 (Dynamic Query Builder) - Expression Trees
     *   Project 15 (Game Buffer) - Memory Management & Spans
     *   Project 16 (Native Wrapper) - Unsafe Code & Interop
     *   Project 17 (Game Engine) - System Integration
-    *   Project 19 (Modding Framework) - Plugin Architecture.
-
-*   **Library Projects should have App Projects:** For projects where the intention is to make a library, always include an App project to demo the functionality. **The App projects should contain just the project structure (folders and .csproj files) for the App demo projects, not the actual implementation code.**
+    *   Project 19 (Modding Framework) - Plugin Architecture
