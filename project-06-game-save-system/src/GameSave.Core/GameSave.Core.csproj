@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>GameSave.Core</PackageId>
+    <Title>File-Based Game Save System</Title>
+    <Description>A library for managing game saves with async/await programming</Description>
+    <Authors>Your Name</Authors>
+    <Copyright>Copyright (c) 2024</Copyright>
+  </PropertyGroup>
+
+</Project> 

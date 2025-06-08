@@ -57,7 +57,7 @@ When creating .NET learning curricula, prioritize the following:
 
 *   **Document Structure & Layout:** The project should adhere to the following document structure:
 
-    *   **README.md:** Streamlined high-level curriculum overview, learning philosophy, quick navigation to other documents, and a "Getting started" section (approximately 200 lines).
+    *   **README.md:** Streamlined high-level curriculum overview, learning philosophy, quick navigation to other documents, and a "Getting started" section (approximately 200 lines). The README is now the full implementation guide after merging the project guide content.
     *   **curriculum-details.md:** Detailed project information, phase-by-phase breakdown, learning objectives, and deliverables (approximately 400 lines).
     *   **microsoft-design-guidelines.md:** Keep as standalone file with current comprehensive content (approximately 700 lines). Add curriculum cross-references (which projects use which guidelines) and maybe add a "Quick Start" section at the top for immediate needs.
     *   **language-essentials.md:** Core .NET concepts needed for the curriculum, essential syntax and patterns, and cross-references to full reference docs (approximately 300 lines). Heavy cross-references to Microsoft guidelines. "See design-guidelines.md for the full story" type callouts.
@@ -214,10 +214,10 @@ The README should also have a "Learning Support" section, with the following con
 - **Practical Focus** - Every concept is taught through building real libraries and tools
 ```
 
-*   **Unit Testing Framework:** When teaching unit testing, use the MSTest framework.
+*   **Unit Testing Framework:** All testing should be done with MSTest, not xUnit or nUnit etc.
 
-*   **Project Directory Structure:** Each project directory must contain:
-    *   `README.md` - Project overview and requirements
-    *   `src/` - Implementation code
-    *   `tests/` - Unit tests (when applicable)
-    *   `docs/` - Project-specific documentation
+*   For the first project in the curriculum, guide the user to create the directory structure and set up the projects themselves. For subsequent projects, provide template projects in the correct layout for them.
+
+*   Project 2 onward: provide template projects in the correct layout for them (only .sln and .csproj files)
+
+*   **Empty Directories:** All empty `docs` and `tests` directories should be removed from the project structure. These directories will not be included in template projects.

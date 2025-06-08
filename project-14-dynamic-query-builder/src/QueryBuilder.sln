@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBuilder.Core", "QueryBuilder.Core\QueryBuilder.Core.csproj", "{K7L8M9N0-O1P2-3456-7890-123456789012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBuilder.App", "QueryBuilder.App\QueryBuilder.App.csproj", "{L8M9N0O1-P2Q3-4567-8901-234567890123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBuilder.Tests", "QueryBuilder.Tests\QueryBuilder.Tests.csproj", "{M9N0O1P2-Q3R4-5678-9012-345678901234}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{K7L8M9N0-O1P2-3456-7890-123456789012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{K7L8M9N0-O1P2-3456-7890-123456789012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{K7L8M9N0-O1P2-3456-7890-123456789012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{K7L8M9N0-O1P2-3456-7890-123456789012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{L8M9N0O1-P2Q3-4567-8901-234567890123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{L8M9N0O1-P2Q3-4567-8901-234567890123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{L8M9N0O1-P2Q3-4567-8901-234567890123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{L8M9N0O1-P2Q3-4567-8901-234567890123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{M9N0O1P2-Q3R4-5678-9012-345678901234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{M9N0O1P2-Q3R4-5678-9012-345678901234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{M9N0O1P2-Q3R4-5678-9012-345678901234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{M9N0O1P2-Q3R4-5678-9012-345678901234}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal 
