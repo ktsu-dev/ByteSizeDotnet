@@ -35,7 +35,7 @@ This project emphasizes:
 
 ```
 project-09-plugin-system/
-├── README.md                    # This file - complete implementation guide
+├── README.md                    # Project instructions
 ├── PluginSystem.sln             # Solution file
 ├── PluginSystem.Core/           # Main library implementation
 ├── PluginSystem.App/            # Console application
@@ -1288,7 +1288,7 @@ public class WeaponFactory : IWeaponFactory
 
 ## Resources
 
-- 📚 **This README** - Complete implementation instructions
+- 📚 **[Progress Tracker](../progress-tracker.md)** - Track your learning progress
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Dependency Injection Documentation](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)**

@@ -35,7 +35,7 @@ This project integrates all Microsoft guidelines and best practices from the ent
 
 ```
 project-17-game-engine/
-├── README.md                    # This file - complete implementation guide
+├── README.md                    # Project instructions
 ├── GameEngine.sln               # Solution file
 ├── GameEngine.Core/             # Main library implementation
 ├── GameEngine.App/              # Console application

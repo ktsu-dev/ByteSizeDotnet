@@ -35,7 +35,7 @@ This project emphasizes:
 
 ```
 project-11-input-manager/
-├── README.md                    # This file - complete implementation guide
+├── README.md                    # Project instructions
 ├── InputManager.sln             # Solution file
 ├── InputManager.Core/           # Main library implementation
 ├── InputManager.App/            # Console application
@@ -1092,7 +1092,7 @@ static void Main(string[] args)
 
 ## Resources
 
-- 📚 **This README** - Complete implementation instructions
+- 📚 **[Progress Tracker](../progress-tracker.md)** - Track your learning progress
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Observer Pattern Documentation](https://learn.microsoft.com/en-us/dotnet/standard/events/)**

@@ -35,7 +35,7 @@ This project emphasizes:
 
 ```
 project-10-dungeon-generator/
-├── README.md                       # This file - complete implementation guide
+├── README.md                       # Project instructions
 ├── DungeonGenerator.sln         # Solution file
 ├── DungeonGenerator.Core/       # Main library implementation
 ├── DungeonGenerator.App/        # Console application

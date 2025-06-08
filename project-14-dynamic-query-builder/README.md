@@ -35,7 +35,7 @@ This project emphasizes:
 
 ```
 project-14-dynamic-query-builder/
-├── README.md                           # This file - complete implementation guide
+├── README.md                           # Project instructions
 ├── QueryBuilder.sln             # Solution file
 ├── QueryBuilder.Core/           # Main library implementation
 ├── QueryBuilder.App/            # Console application
@@ -65,7 +65,7 @@ A sophisticated query builder system featuring:
 
 ## Resources
 
-- 📚 **This README** - Complete implementation instructions
+- 📚 **[Progress Tracker](../progress-tracker.md)** - Track your learning progress
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Expression Trees Documentation](https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/expression-trees/)**

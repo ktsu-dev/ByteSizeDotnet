@@ -35,7 +35,7 @@ This project emphasizes:
 
 ```
 project-13-configuration-system/
-├── README.md                       # This file - complete implementation guide
+├── README.md                       # Project instructions
 ├── ConfigurationSystem.sln      # Solution file
 ├── ConfigurationSystem.Core/    # Main library implementation
 ├── ConfigurationSystem.App/     # Console application
