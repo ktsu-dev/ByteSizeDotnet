@@ -37,7 +37,10 @@ This project emphasizes:
 project-15-game-buffer/
 ├── README.md                    # This file
 ├── game-buffer-project-guide.md # Detailed implementation guide
-├── src/                         # Your implementation
+├── GameBuffer.sln               # Solution file
+├── GameBuffer.Core/             # Main library implementation
+├── GameBuffer.App/              # Console application
+└── GameBuffer.Tests/            # Unit tests
 ├── tests/                       # Unit tests
 └── docs/                        # Additional documentation
 ```

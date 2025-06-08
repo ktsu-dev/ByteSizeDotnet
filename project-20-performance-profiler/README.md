@@ -37,7 +37,10 @@ This project demonstrates advanced diagnostics and performance analysis:
 project-20-performance-profiler/
 ├── README.md                        # This file
 ├── performance-profiler-project-guide.md # Detailed implementation guide
-├── src/                             # Your implementation
+├── PerformanceProfiler.sln       # Solution file
+├── PerformanceProfiler.Core/    # Main library implementation
+├── PerformanceProfiler.App/     # Console application
+└── PerformanceProfiler.Tests/   # Unit tests
 │   ├── Core/                        # Profiler core engine
 │   ├── CPU/                         # CPU profiling
 │   ├── Memory/                      # Memory analysis

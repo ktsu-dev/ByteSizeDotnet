@@ -37,7 +37,10 @@ This project emphasizes:
 project-16-native-wrapper/
 ├── README.md                    # This file
 ├── native-wrapper-project-guide.md # Detailed implementation guide
-├── src/                         # Your implementation
+├── NativeWrapper.sln            # Solution file
+├── NativeWrapper.Core/          # Main library implementation
+├── NativeWrapper.App/           # Console application
+└── NativeWrapper.Tests/         # Unit tests
 ├── tests/                       # Unit tests
 └── docs/                        # Additional documentation
 ```

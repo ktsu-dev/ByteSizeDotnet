@@ -37,7 +37,10 @@ This project emphasizes:
 project-11-input-manager/
 ├── README.md                    # This file
 ├── input-manager-project-guide.md # Detailed implementation guide
-├── src/                         # Your implementation
+├── InputManager.sln             # Solution file
+├── InputManager.Core/           # Main library implementation
+├── InputManager.App/            # Console application
+└── InputManager.Tests/          # Unit tests
 ├── tests/                       # Unit tests
 └── docs/                        # Additional documentation
 ```

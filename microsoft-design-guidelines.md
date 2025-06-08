@@ -517,15 +517,15 @@ public class WindowsUIFactory : UIFactory
 
 ```
 MyLibrary/
-├── src/
-│   └── MyLibrary/
-│       ├── Models/           # Data models
-│       ├── Services/         # Business logic
-│       ├── Extensions/       # Extension methods
-│       ├── Exceptions/       # Custom exceptions
-│       └── Utilities/        # Helper classes
-├── tests/
-│   └── MyLibrary.Tests/
+├── MyLibrary.sln             # Solution file
+├── MyLibrary.Core/           # Main library
+│   ├── Models/               # Data models
+│   ├── Services/             # Business logic
+│   ├── Extensions/           # Extension methods
+│   ├── Exceptions/           # Custom exceptions
+│   └── Utilities/            # Helper classes
+├── MyLibrary.App/            # Console application
+├── MyLibrary.Tests/          # Unit tests
 └── docs/
     └── api/                  # API documentation
 ```

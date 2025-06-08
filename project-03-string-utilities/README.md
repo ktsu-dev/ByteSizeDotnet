@@ -66,7 +66,7 @@ var result = "  hello world  "
 
 ### Step 1: Project Setup (10 minutes)
 
-Navigate to the `project-03-string-utilities/src` directory and create the solution:
+Navigate to the `project-03-string-utilities/` directory and create the solution:
 
 ```bash
 # Create the main solution file

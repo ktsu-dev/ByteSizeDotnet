@@ -77,7 +77,7 @@ var list = query.ToList();        // Executes and materializes
 
 ### Step 1: Project Setup (10 minutes)
 
-Navigate to the `project-05-statistics-analyzer/src` directory and create the solution:
+Navigate to the `project-05-statistics-analyzer/` directory and create the solution:
 
 ```bash
 # Create the main solution file

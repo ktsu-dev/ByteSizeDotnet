@@ -37,7 +37,10 @@ This project emphasizes:
 project-09-plugin-system/
 ├── README.md                    # This file
 ├── plugin-system-project-guide.md # Detailed implementation guide
-├── src/                         # Your implementation
+├── PluginSystem.sln             # Solution file
+├── PluginSystem.Core/           # Main library implementation
+├── PluginSystem.App/            # Console application
+└── PluginSystem.Tests/          # Unit tests
 ├── tests/                       # Unit tests
 └── docs/                        # Additional documentation
 ```

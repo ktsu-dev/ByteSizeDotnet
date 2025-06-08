@@ -4,6 +4,37 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 
 ---
 
+## Project Template Information
+
+**Important Note**: All projects except Project 1 include pre-configured project templates to streamline development. Each project directory contains:
+
+- **Solution file** (`.sln`) - Pre-configured with correct project references
+- **Core library project** (`ProjectName.Core/`) - Main implementation code
+- **Console application** (`ProjectName.App/`) - Demonstration and testing
+- **Unit test project** (`ProjectName.Tests/`) - Comprehensive test coverage
+- **README.md** - Detailed instructions and implementation guidance
+
+The templates follow Microsoft's recommended project structure:
+
+```
+project-xx-name/
+├── ProjectName.sln              # Solution file
+├── ProjectName.Core/            # Main library (.NET 8.0 class library)
+│   ├── Models/                  # Data models and value types
+│   ├── Services/                # Business logic and services
+│   ├── Interfaces/              # Contracts and abstractions
+│   └── Extensions/              # Extension methods
+├── ProjectName.App/             # Console application (.NET 8.0)
+│   └── Program.cs               # Demonstration code
+├── ProjectName.Tests/           # Unit tests (MSTest framework)
+│   └── UnitTest1.cs             # Test implementations
+└── README.md                    # Project instructions
+```
+
+**For instructors/advanced users**: Each project README includes complete manual setup instructions for creating the solution structure from scratch, should you need to recreate projects or understand the underlying dotnet CLI commands.
+
+---
+
 ## Phase 1: .NET Fundamentals & Idioms (Projects 1-4)
 
 ### Project 1: .NET Type System & Conventions
@@ -17,6 +48,19 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Naming Conventions](microsoft-design-guidelines.md#basic-naming-rules)
   - [Class vs Struct Decision Matrix](microsoft-design-guidelines.md#class-vs-struct-decision-matrix)
 
+**⚠️ Note**: This project requires manual setup (no template provided) to teach foundational .NET project creation skills.
+
+**Directory Structure**: `project-01-dice-roller/`
+
+```
+project-01-dice-roller/
+├── README.md                    # Complete setup and implementation guide
+├── DiceRoller.sln               # Your implementation (to be created)
+├── DiceRoller.Core/
+├── DiceRoller.App/
+└── DiceRoller.Tests/
+```
+
 ### Project 2: Collections & Enumerables
 
 **Project**: Build a **Card Deck Shuffler**
@@ -27,6 +71,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Microsoft Guidelines Focus**:
   - [Collection Guidelines](microsoft-design-guidelines.md#collection-guidelines)
   - [Generic Type Parameters](microsoft-design-guidelines.md#generic-type-parameters)
+
+**✅ Template Available**: Pre-configured solution with `CardDeck.Core`, `CardDeck.App`, and `CardDeck.Tests` projects.
+
+**Directory Structure**: `project-02-card-deck/`
 
 ### Project 3: Extension Methods & Fluent APIs
 
@@ -39,6 +87,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Method Design](microsoft-design-guidelines.md#method-design)
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
 
+**✅ Template Available**: Pre-configured solution with `StringUtilities.Core`, `StringUtilities.App`, and `StringUtilities.Tests` projects.
+
+**Directory Structure**: `project-03-string-utilities/`
+
 ### Project 4: Pattern Matching & Switch Expressions
 
 **Project**: Build a **State Machine for Turn-Based Games**
@@ -48,6 +100,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Deliverable**: Game state management library
 - **Microsoft Guidelines Focus**:
   - [Immutability Guidelines](microsoft-design-guidelines.md#immutability-guidelines)
+
+**✅ Template Available**: Pre-configured solution with `StateMachine.Core`, `StateMachine.App`, and `StateMachine.Tests` projects.
+
+**Directory Structure**: `project-04-state-machine/`
 
 ---
 
@@ -64,6 +120,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
   - [Collection Guidelines](microsoft-design-guidelines.md#collection-guidelines)
 
+**✅ Template Available**: Pre-configured solution with `GameStatistics.Core`, `GameStatistics.App`, and `GameStatistics.Tests` projects.
+
+**Directory Structure**: `project-05-statistics-analyzer/`
+
 ### Project 6: Async/Await & Task-Based Programming
 
 **Project**: Build a **File-Based Game Save System**
@@ -75,6 +135,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Async Guidelines](microsoft-design-guidelines.md#async-guidelines)
   - [Exception Design](microsoft-design-guidelines.md#exception-design)
 
+**✅ Template Available**: Pre-configured solution with `GameSave.Core`, `GameSave.App`, and `GameSave.Tests` projects.
+
+**Directory Structure**: `project-06-game-save-system/`
+
 ### Project 7: Delegates, Events & Functional Programming
 
 **Project**: Build an **Event-Driven Audio Manager**
@@ -85,6 +149,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Microsoft Guidelines Focus**:
   - [Event Design](microsoft-design-guidelines.md#event-design)
 
+**✅ Template Available**: Pre-configured solution with `AudioManager.Core`, `AudioManager.App`, and `AudioManager.Tests` projects.
+
+**Directory Structure**: `project-07-audio-manager/`
+
 ### Project 8: Generics & Constraints
 
 **Project**: Build a **Generic Object Pool**
@@ -94,6 +162,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Deliverable**: Performance-optimized object pooling library
 - **Microsoft Guidelines Focus**:
   - [Generic Type Parameters](microsoft-design-guidelines.md#generic-type-parameters)
+
+**✅ Template Available**: Pre-configured solution with `ObjectPool.Core`, `ObjectPool.App`, and `ObjectPool.Tests` projects.
+
+**Directory Structure**: `project-08-object-pool/`
 
 ---
 
@@ -110,6 +182,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Abstract Classes vs Interfaces](microsoft-design-guidelines.md#abstract-classes-vs-interfaces)
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
 
+**✅ Template Available**: Pre-configured solution with `PluginSystem.Core`, `PluginSystem.App`, and `PluginSystem.Tests` projects.
+
+**Directory Structure**: `project-09-plugin-system/`
+
 ### Project 10: Builder Pattern & Factory Pattern
 
 **Project**: Build a **Procedural Dungeon Generator**
@@ -120,6 +196,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Microsoft Guidelines Focus**:
   - [Builder Pattern](microsoft-design-guidelines.md#builder-pattern)
   - [Factory Pattern](microsoft-design-guidelines.md#factory-pattern)
+
+**✅ Template Available**: Pre-configured solution with `DungeonGenerator.Core`, `DungeonGenerator.App`, and `DungeonGenerator.Tests` projects.
+
+**Directory Structure**: `project-10-dungeon-generator/`
 
 ### Project 11: Observer Pattern & Command Pattern
 
@@ -132,6 +212,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Event Design](microsoft-design-guidelines.md#event-design)
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
 
+**✅ Template Available**: Pre-configured solution with `InputManager.Core`, `InputManager.App`, and `InputManager.Tests` projects.
+
+**Directory Structure**: `project-11-input-manager/`
+
 ### Project 12: Repository Pattern & Unit of Work
 
 **Project**: Build a **Game Asset Manager**
@@ -142,6 +226,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Microsoft Guidelines Focus**:
   - [Abstract Classes vs Interfaces](microsoft-design-guidelines.md#abstract-classes-vs-interfaces)
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
+
+**✅ Template Available**: Pre-configured solution with `AssetManager.Core`, `AssetManager.App`, and `AssetManager.Tests` projects.
+
+**Directory Structure**: `project-12-asset-manager/`
 
 ---
 
@@ -158,6 +246,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
 
+**✅ Template Available**: Pre-configured solution with `ConfigurationSystem.Core`, `ConfigurationSystem.App`, and `ConfigurationSystem.Tests` projects.
+
+**Directory Structure**: `project-13-configuration-system/`
+
 ### Project 14: Expression Trees & Dynamic Code
 
 **Project**: Build a **Dynamic Query Builder**
@@ -168,6 +260,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Microsoft Guidelines Focus**:
   - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
   - [Exception Design](microsoft-design-guidelines.md#exception-design)
+
+**✅ Template Available**: Pre-configured solution with `QueryBuilder.Core`, `QueryBuilder.App`, and `QueryBuilder.Tests` projects.
+
+**Directory Structure**: `project-14-dynamic-query-builder/`
 
 ### Project 15: Memory Management & Spans
 
@@ -180,6 +276,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
   - [Collection Guidelines](microsoft-design-guidelines.md#collection-guidelines)
 
+**✅ Template Available**: Pre-configured solution with `GameBuffer.Core`, `GameBuffer.App`, and `GameBuffer.Tests` projects.
+
+**Directory Structure**: `project-15-game-buffer/`
+
 ### Project 16: Unsafe Code & Interop
 
 **Project**: Build a **Native Library Wrapper**
@@ -190,6 +290,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Microsoft Guidelines Focus**:
   - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
   - [Exception Design](microsoft-design-guidelines.md#exception-design)
+
+**✅ Template Available**: Pre-configured solution with `NativeWrapper.Core`, `NativeWrapper.App`, and `NativeWrapper.Tests` projects.
+
+**Directory Structure**: `project-16-native-wrapper/`
 
 ---
 
@@ -206,6 +310,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Versioning and Compatibility](microsoft-design-guidelines.md#versioning-and-compatibility)
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
 
+**✅ Template Available**: Pre-configured solution with `GameEngine.Core`, `GameEngine.App`, and `GameEngine.Tests` projects.
+
+**Directory Structure**: `project-17-game-engine/`
+
 ### Project 18: Unit Testing & Mocking
 
 **Project**: **Test Suite for Game Logic**
@@ -216,6 +324,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Microsoft Guidelines Focus**:
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
   - [Exception Design](microsoft-design-guidelines.md#exception-design)
+
+**✅ Template Available**: Pre-configured solution with `MultiplayerSystem.Core`, `MultiplayerSystem.App`, and `MultiplayerSystem.Tests` projects.
+
+**Directory Structure**: `project-18-multiplayer-system/`
 
 ### Project 19: Source Generators
 
@@ -228,6 +340,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
   - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
 
+**✅ Template Available**: Pre-configured solution with `ModdingFramework.Core`, `ModdingFramework.App`, and `ModdingFramework.Tests` projects.
+
+**Directory Structure**: `project-19-modding-framework/`
+
 ### Project 20: Performance Profiling & Optimization
 
 **Project**: **Optimize Your Game Libraries**
@@ -238,6 +354,10 @@ _Comprehensive breakdown of all 20 projects with learning objectives and Microso
 - **Microsoft Guidelines Focus**:
   - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
   - [Collection Guidelines](microsoft-design-guidelines.md#collection-guidelines)
+
+**✅ Template Available**: Pre-configured solution with `PerformanceProfiler.Core`, `PerformanceProfiler.App`, and `PerformanceProfiler.Tests` projects.
+
+**Directory Structure**: `project-20-performance-profiler/`
 
 ---
 

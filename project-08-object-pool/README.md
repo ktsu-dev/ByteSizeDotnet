@@ -36,10 +36,10 @@ This project emphasizes:
 ```
 project-08-object-pool/
 ├── README.md                   # This file
-├── object-pool-project-guide.md # Detailed implementation guide
-├── src/                        # Your implementation
-├── tests/                      # Unit tests
-└── docs/                       # Additional documentation
+├── ObjectPool.sln              # Solution file
+├── ObjectPool.Core/            # Main library implementation
+├── ObjectPool.App/             # Console application
+└── ObjectPool.Tests/           # Unit tests
 ```
 
 ## What You'll Build
@@ -62,11 +62,26 @@ A high-performance object pooling system featuring:
 - **Thread Safety**: Concurrent access to generic collections
 - **Performance**: Memory allocation optimization techniques
 
-## Project Setup Instructions
+## Project Template
 
-### Step 1: Create the Solution Structure (10 minutes)
+**✅ Template Available**: This project includes a pre-configured solution template to streamline development!
 
-Navigate to the `project-08-object-pool/` directory:
+The template includes:
+
+- `ObjectPool.sln` - Solution file with all project references configured
+- `ObjectPool.Core/` - Main library project (.NET 8.0 class library)
+- `ObjectPool.App/` - Console application for testing and demonstration
+- `ObjectPool.Tests/` - Unit test project with MSTest framework
+
+**To get started**: Open `ObjectPool.sln` in your IDE and begin implementing in the `ObjectPool.Core` project!
+
+## Project Setup Instructions (Manual Setup - Optional)
+
+**Note**: The following instructions are for educational purposes and manual setup. The template above provides these pre-configured.
+
+### Step 1: Manual Solution Creation (10 minutes)
+
+If you need to recreate the solution structure manually, use these commands:
 
 ```bash
 # Create the main solution file

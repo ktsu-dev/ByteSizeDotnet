@@ -64,7 +64,7 @@ A dice rolling library that supports:
 
 ### Step 1: Create the Solution Structure (15 minutes)
 
-In this project, you'll learn to set up a complete .NET solution from scratch. Open your terminal and navigate to the `project-01-dice-roller/src` directory.
+In this project, you'll learn to set up a complete .NET solution from scratch. Open your terminal and navigate to the `project-01-dice-roller/` directory.
 
 ```bash
 # Create the main solution file

@@ -12,6 +12,7 @@ This curriculum is designed for 2-hour evening sessions with ADHD-friendly, focu
 - **Independent Projects**: No project dependencies to maintain focus
 - **Practical Applications**: Libraries, tools, and games over web services
 - **Progressive Complexity**: Concepts build upon each other logically
+- **Template-Driven**: Pre-configured project templates (Projects 2-20) streamline setup and let you focus on learning
 
 ## Essential Resources Before You Start
 
@@ -26,6 +27,23 @@ This curriculum is designed for 2-hour evening sessions with ADHD-friendly, focu
    - **[Glossary](reference/glossary.md)** - .NET terminology explained
    - **[Language Comparison](reference/language-comparison.md)** - How .NET maps to other languages
    - **[Quick Syntax](reference/quick-syntax.md)** - Handy syntax reference
+
+---
+
+## Project Structure
+
+**Template Information**: All projects except Project 1 include pre-configured .NET solution templates:
+
+```
+project-xx-name/
+├── ProjectName.sln              # Solution file with references
+├── ProjectName.Core/            # Main library (.NET 8.0)
+├── ProjectName.App/             # Console app for testing
+├── ProjectName.Tests/           # Unit tests (MSTest)
+└── README.md                    # Detailed instructions
+```
+
+**Project 1** requires manual setup to teach foundational .NET project creation skills. **Projects 2-20** include templates so you can focus on implementation and learning concepts rather than project configuration.
 
 ---
 

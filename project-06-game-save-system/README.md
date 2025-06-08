@@ -82,7 +82,7 @@ catch (Exception ex)
 
 ### Step 1: Project Setup (15 minutes)
 
-Navigate to the `project-06-game-save-system/src` directory and create the solution:
+Navigate to the `project-06-game-save-system/` directory and create the solution:
 
 ```bash
 # Create the main solution file

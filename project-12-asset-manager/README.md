@@ -37,7 +37,10 @@ This project emphasizes:
 project-12-asset-manager/
 ├── README.md                    # This file
 ├── asset-manager-project-guide.md # Detailed implementation guide
-├── src/                         # Your implementation
+├── AssetManager.sln             # Solution file
+├── AssetManager.Core/           # Main library implementation
+├── AssetManager.App/            # Console application
+└── AssetManager.Tests/          # Unit tests
 ├── tests/                       # Unit tests
 └── docs/                        # Additional documentation
 ```

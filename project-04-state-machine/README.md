@@ -80,7 +80,7 @@ var canMove = (player, gameState, timeRemaining) switch
 
 ### Step 1: Project Setup (10 minutes)
 
-Navigate to the `project-04-state-machine/src` directory and create the solution:
+Navigate to the `project-04-state-machine/` directory and create the solution:
 
 ```bash
 # Create the main solution file

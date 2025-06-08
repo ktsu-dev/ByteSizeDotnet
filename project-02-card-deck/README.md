@@ -59,11 +59,26 @@ IEnumerable<T>        // Can iterate (foreach)
 - `IReadOnlyList<T>` - Expose lists safely
 - `Queue<T>` and `Stack<T>` - Specialized ordering
 
-## Project Setup Instructions
+## Project Template
 
-### Step 1: Project Setup (10 minutes)
+**✅ Template Available**: This project includes a pre-configured solution template to streamline development!
 
-Navigate to the `project-02-card-deck/src` directory and create the solution:
+The template includes:
+
+- `CardDeck.sln` - Solution file with all project references configured
+- `CardDeck.Core/` - Main library project (.NET 8.0 class library)
+- `CardDeck.App/` - Console application for testing and demonstration
+- `CardDeck.Tests/` - Unit test project with MSTest framework
+
+**To get started**: Open `CardDeck.sln` in your IDE and begin implementing in the `CardDeck.Core` project!
+
+## Project Setup Instructions (Manual Setup - Optional)
+
+**Note**: The following instructions are for educational purposes and manual setup. The template above provides these pre-configured.
+
+### Step 1: Manual Project Creation (10 minutes)
+
+If you need to recreate the solution structure manually, use these commands:
 
 ```bash
 # Create the main solution file

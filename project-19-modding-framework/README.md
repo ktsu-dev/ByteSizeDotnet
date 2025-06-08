@@ -37,7 +37,10 @@ This project demonstrates advanced extensibility and plugin architecture:
 project-19-modding-framework/
 ├── README.md                        # This file
 ├── modding-framework-project-guide.md # Detailed implementation guide
-├── src/                             # Your implementation
+├── ModdingFramework.sln          # Solution file
+├── ModdingFramework.Core/       # Main library implementation
+├── ModdingFramework.App/        # Console application
+└── ModdingFramework.Tests/      # Unit tests
 │   ├── Core/                        # Framework core
 │   ├── API/                         # Modding API surface
 │   ├── Loader/                      # Assembly loading system

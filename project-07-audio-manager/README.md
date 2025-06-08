@@ -17,7 +17,6 @@ This project emphasizes:
 This project includes a complete solution template:
 
 ```
-src/
 ├── AudioManager.sln                    # Solution file
 ├── AudioManager.Core/                  # Main library
 │   ├── AudioManager.Core.csproj       # Core library project
@@ -42,7 +41,7 @@ src/
 
 ## Quick Start
 
-1. **Open the template**: Navigate to `src/` directory
+1. **Open the template**: Navigate to project directory
 2. **Build solution**: `dotnet build` (should compile successfully)
 3. **Run tests**: `dotnet test` (empty tests will pass)
 4. **Implement features**: Follow the implementation guide below
@@ -52,10 +51,10 @@ src/
 ```
 project-07-audio-manager/
 ├── README.md                    # This file
-├── audio-manager-project-guide.md # Detailed implementation guide
-├── src/                         # Your implementation
-├── tests/                       # Unit tests
-└── docs/                        # Additional documentation
+├── AudioManager.sln             # Solution file
+├── AudioManager.Core/           # Main library implementation
+├── AudioManager.App/            # Console application
+└── AudioManager.Tests/          # Unit tests
 ```
 
 ## What You'll Build

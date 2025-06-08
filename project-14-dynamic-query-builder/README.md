@@ -37,7 +37,10 @@ This project emphasizes:
 project-14-dynamic-query-builder/
 ├── README.md                           # This file
 ├── dynamic-query-builder-project-guide.md # Detailed implementation guide
-├── src/                                # Your implementation
+├── QueryBuilder.sln             # Solution file
+├── QueryBuilder.Core/           # Main library implementation
+├── QueryBuilder.App/            # Console application
+└── QueryBuilder.Tests/          # Unit tests
 ├── tests/                              # Unit tests
 └── docs/                               # Additional documentation
 ```

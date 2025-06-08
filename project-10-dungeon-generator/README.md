@@ -37,7 +37,10 @@ This project emphasizes:
 project-10-dungeon-generator/
 ├── README.md                       # This file
 ├── dungeon-generator-project-guide.md # Detailed implementation guide
-├── src/                            # Your implementation
+├── DungeonGenerator.sln         # Solution file
+├── DungeonGenerator.Core/       # Main library implementation
+├── DungeonGenerator.App/        # Console application
+└── DungeonGenerator.Tests/      # Unit tests
 ├── tests/                          # Unit tests
 └── docs/                           # Additional documentation
 ```

@@ -37,7 +37,10 @@ This project integrates all Microsoft guidelines and best practices from the ent
 project-17-game-engine/
 ├── README.md                    # This file
 ├── game-engine-project-guide.md # Detailed implementation guide
-├── src/                         # Your implementation
+├── GameEngine.sln               # Solution file
+├── GameEngine.Core/             # Main library implementation
+├── GameEngine.App/              # Console application
+└── GameEngine.Tests/            # Unit tests
 │   ├── Core/                    # Engine core systems
 │   ├── Rendering/               # Graphics and rendering
 │   ├── Audio/                   # Audio management

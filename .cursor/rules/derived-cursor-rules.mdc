@@ -218,9 +218,9 @@ The README should also have a "Learning Support" section, with the following con
 
 *   **Unit Testing Framework:** All testing should be done with MSTest, not xUnit or nUnit etc.
 
-*   For the first project in the curriculum, guide the user to create the directory structure and set up the projects themselves. For subsequent projects, provide template projects in the correct layout for them.
+*   For the first project in the curriculum, guide the user to create the directory structure and set up the projects themselves. For subsequent projects, provide template projects in the correct layout for them. **Ensure all curriculum documentation guides the user to create the correct directory layouts, as shown in the included project templates.**
 
-*   Project 2 onward: provide template projects in the correct layout for them (only .sln and .csproj files). **All projects from project 2 onwards should follow the same directory layout.**
+*   Project 2 onward: provide template projects in the correct layout for them (only .sln and .csproj files). **All projects from project 2 onwards should follow the same directory layout.** **For projects that have templates (all aside from project 1) keep the instructions for how to create the solution and project layouts in case they need to be recreated, but note that the project template has been created to help streamline the lesson.**
 
 *   **Project Directory Layout**:
     *   Project 1: User manually creates the directory structure and sets up the projects.
@@ -361,3 +361,99 @@ The README should also have a "Learning Support" section, with the following con
     *   **Project 18 (Multiplayer System) - STRONG FOUNDATION**: 800+ lines of solid foundation content, needs complete implementation guide (~400 lines), extension challenges, resources
     *   **Project 19 (Modding Framework) - STRONG FOUNDATION**: 700+ lines of substantial foundation content, needs complete implementation guide (~500 lines), extension challenges, resources
     *   **Project 20 (Performance Profiler) - STRONG FOUNDATION**: 600+ lines of substantial foundation content, needs complete implementation guide (~600 lines), extension challenges, resources
+
+*   **Project Template Information**:
+    *   **Important Note**: All projects except Project 1 include pre-configured project templates to streamline development. Each project directory contains:
+        *   **Solution file** (`.sln`) - Pre-configured with correct project references
+        *   **Core library project** (`ProjectName.Core/`) - Main implementation code
+        *   **Console application** (`ProjectName.App/`) - Demonstration and testing
+        *   **Unit test project** (`ProjectName.Tests/`) - Comprehensive test coverage
+        *   **README.md** - Detailed instructions and implementation guidance
+    *   The templates follow Microsoft's recommended project structure:
+
+    ```
+    project-xx-name/
+    ├── ProjectName.sln              # Solution file
+    ├── ProjectName.Core/            # Main library (.NET 8.0 class library)
+    │   ├── Models/                  # Data models and value types
+    │   ├── Services/                # Business logic and services
+    │   ├── Interfaces/              # Contracts and abstractions
+    │   └── Extensions/              # Extension methods
+    ├── ProjectName.App/             # Console application (.NET 8.0)
+    │   └── Program.cs               # Demonstration code
+    ├── ProjectName.Tests/           # Unit tests (MSTest framework)
+    │   └── UnitTest1.cs             # Test implementations
+    └── README.md                    # Project instructions
+    ```
+
+    *   **For instructors/advanced users**: Each project README includes complete manual setup instructions for creating the solution structure from scratch, should you need to recreate projects or understand the underlying dotnet CLI commands.
+    *   **Project 1 (Dice Roller)**:
+        *   **⚠️ Note**: This project requires manual setup (no template provided) to teach foundational .NET project creation skills.
+        *   **Directory Structure**: `project-01-dice-roller/`
+
+    ```
+    project-01-dice-roller/
+    ├── README.md                    # Complete setup and implementation guide
+    └── src/                         # Your implementation (to be created)
+        ├── DiceRoller.sln
+        ├── DiceRoller.Core/
+        ├── DiceRoller.App/
+        └── DiceRoller.Tests/
+    ```
+    *   **Project 2 (Card Deck)**:
+        *   **✅ Template Available**: Pre-configured solution with `CardDeck.Core`, `CardDeck.App`, and `CardDeck.Tests` projects.
+        *   **Directory Structure**: `project-02-card-deck/`
+    *   **Project 3 (String Utilities)**:
+        *   **✅ Template Available**: Pre-configured solution with `StringUtilities.Core`, `StringUtilities.App`, and `StringUtilities.Tests` projects.
+        *   **Directory Structure**: `project-03-string-utilities/`
+    *   **Project 4 (State Machine)**:
+        *   **✅ Template Available**: Pre-configured solution with `StateMachine.Core`, `StateMachine.App`, and `StateMachine.Tests` projects.
+        *   **Directory Structure**: `project-04-state-machine/`
+    *   **Project 5 (Statistics Analyzer)**:
+        *   **✅ Template Available**: Pre-configured solution with `GameStatistics.Core`, `GameStatistics.App`, and `GameStatistics.Tests` projects.
+        *   **Directory Structure**: `project-05-statistics-analyzer/`
+    *   **Project 6 (Game Save System)**:
+        *   **✅ Template Available**: Pre-configured solution with `GameSave.Core`, `GameSave.App`, and `GameSave.Tests` projects.
+        *   **Directory Structure**: `project-06-game-save-system/`
+    *   **Project 7 (Audio Manager)**:
+        *   **✅ Template Available**: Pre-configured solution with `AudioManager.Core`, `AudioManager.App`, and `AudioManager.Tests` projects.
+        *   **Directory Structure**: `project-07-audio-manager/`
+    *   **Project 8 (Object Pool)**:
+        *   **✅ Template Available**: Pre-configured solution with `ObjectPool.Core`, `ObjectPool.App`, and `ObjectPool.Tests` projects.
+        *   **Directory Structure**: `project-08-object-pool/`
+    *   **Project 9 (Plugin System)**:
+        *   **✅ Template Available**: Pre-configured solution with `PluginSystem.Core`, `PluginSystem.App`, and `PluginSystem.Tests` projects.
+        *   **Directory Structure**: `project-09-plugin-system/`
+    *   **Project 10 (Dungeon Generator)**:
+        *   **✅ Template Available**: Pre-configured solution with `DungeonGenerator.Core`, `DungeonGenerator.App`, and `DungeonGenerator.Tests` projects.
+        *   **Directory Structure**: `project-10-dungeon-generator/`
+    *   **Project 11 (Input Manager)**:
+        *   **✅ Template Available**: Pre-configured solution with `InputManager.Core`, `InputManager.App`, and `InputManager.Tests` projects.
+        *   **Directory Structure**: `project-11-input-manager/`
+    *   **Project 12 (Asset Manager)**:
+        *   **✅ Template Available**: Pre-configured solution with `AssetManager.Core`, `AssetManager.App`, and `AssetManager.Tests` projects.
+        *   **Directory Structure**: `project-12-asset-manager/`
+    *   **Project 13 (Configuration System)**:
+        *   **✅ Template Available**: Pre-configured solution with `ConfigurationSystem.Core`, `ConfigurationSystem.App`, and `ConfigurationSystem.Tests` projects.
+        *   **Directory Structure**: `project-13-configuration-system/`
+    *   **Project 14 (Dynamic Query Builder)**:
+        *   **✅ Template Available**: Pre-configured solution with `QueryBuilder.Core`, `QueryBuilder.App`, and `QueryBuilder.Tests` projects.
+        *   **Directory Structure**: `project-14-dynamic-query-builder/`
+    *   **Project 15 (Memory Management & Spans)**:
+        *   **✅ Template Available**: Pre-configured solution with `GameBuffer.Core`, `GameBuffer.App`, and `GameBuffer.Tests` projects.
+        *   **Directory Structure**: `project-15-game-buffer/`
+    *   **Project 16 (Unsafe Code & Interop)**:
+        *   **✅ Template Available**: Pre-configured solution with `NativeWrapper.Core`, `NativeWrapper.App`, and `NativeWrapper.Tests` projects.
+        *   **Directory Structure**: `project-16-native-wrapper/`
+    *   **Project 17 (Game Engine)**:
+        *   **✅ Template Available**: Pre-configured solution with `GameEngine.Core`, `GameEngine.App`, and `GameEngine.Tests` projects.
+        *   **Directory Structure**: `project-17-game-engine/`
+    *   **Project 18 (Unit Testing & Mocking)**:
+        *   **✅ Template Available**: Pre-configured solution with `MultiplayerSystem.Core`, `MultiplayerSystem.App`, and `MultiplayerSystem.Tests` projects.
+        *   **Directory Structure**: `project-18-multiplayer-system/`
+    *   **Project 19 (Source Generators)**:
+        *   **✅ Template Available**: Pre-configured solution with `ModdingFramework.Core`, `ModdingFramework.App`, and `ModdingFramework.Tests` projects.
+        *   **Directory Structure**: `project-19-modding-framework/`
+    *   **Project 20 (Performance Profiling & Optimization)**:
+        *   **✅ Template Available**: Pre-configured solution with `PerformanceProfiler.Core`, `PerformanceProfiler.App`, and `PerformanceProfiler.Tests` projects.
+        *   **Directory Structure**: `project-20-performance-profiler/`
