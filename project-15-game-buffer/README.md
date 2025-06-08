@@ -26,7 +26,7 @@ This project emphasizes:
    Review [Memory Management Guidelines](../microsoft-design-guidelines.md#memory-management) before starting
 
 2. **Start Coding** 💻  
-   See [detailed project guide](game-buffer-project-guide.md) for step-by-step instructions
+   Follow the implementation guide below for step-by-step instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) as you complete milestones
@@ -35,8 +35,7 @@ This project emphasizes:
 
 ```
 project-15-game-buffer/
-├── README.md                    # This file
-├── game-buffer-project-guide.md # Detailed implementation guide
+├── README.md                    # This file - complete implementation guide
 ├── GameBuffer.sln               # Solution file
 ├── GameBuffer.Core/             # Main library implementation
 ├── GameBuffer.App/              # Console application
@@ -67,7 +66,7 @@ A high-performance buffer management system featuring:
 
 ## Resources
 
-- 📚 **[Detailed Guide](game-buffer-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Span and Memory Documentation](https://learn.microsoft.com/en-us/dotnet/standard/memory-and-spans/)**

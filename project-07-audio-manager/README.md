@@ -941,7 +941,7 @@ audioManager.Dispose();
 
 ## Resources
 
-- 📚 **[Detailed Guide](audio-manager-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Events and Delegates Documentation](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)**

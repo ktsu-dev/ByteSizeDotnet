@@ -26,7 +26,7 @@ This project integrates all Microsoft guidelines and best practices from the ent
    This capstone integrates concepts from all previous projects
 
 2. **Start Building** 💻  
-   See [detailed project guide](game-engine-project-guide.md) for comprehensive instructions
+   Follow the implementation guide below for comprehensive instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) for final milestones
@@ -35,8 +35,7 @@ This project integrates all Microsoft guidelines and best practices from the ent
 
 ```
 project-17-game-engine/
-├── README.md                    # This file
-├── game-engine-project-guide.md # Detailed implementation guide
+├── README.md                    # This file - complete implementation guide
 ├── GameEngine.sln               # Solution file
 ├── GameEngine.Core/             # Main library implementation
 ├── GameEngine.App/              # Console application

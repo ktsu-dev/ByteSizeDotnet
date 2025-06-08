@@ -150,7 +150,7 @@ public readonly struct Card : IEquatable<Card>
 
 ### Step 3: Deck as IEnumerable (30 minutes)
 
-**Understanding IEnumerable<T>**
+**Understanding IEnumerable\<T\>**
 
 ```csharp
 namespace CardDeck.Core.Models;

@@ -26,7 +26,7 @@ This project emphasizes:
    Review [Generic Design Guidelines](../microsoft-design-guidelines.md#generic-design-guidelines) before starting
 
 2. **Start Coding** 💻  
-   See [detailed project guide](object-pool-project-guide.md) for step-by-step instructions
+   Follow the implementation guide below for step-by-step instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) as you complete milestones
@@ -1168,7 +1168,7 @@ manager.Dispose();
 
 ## Resources
 
-- 📚 **[Detailed Guide](object-pool-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Generics Documentation](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/)**

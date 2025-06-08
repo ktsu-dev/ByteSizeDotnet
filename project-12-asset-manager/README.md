@@ -26,7 +26,7 @@ This project emphasizes:
    Review [Repository Pattern Guidelines](../microsoft-design-guidelines.md#repository-pattern) before starting
 
 2. **Start Coding** 💻  
-   See [detailed project guide](asset-manager-project-guide.md) for step-by-step instructions
+   Follow the implementation guide below for step-by-step instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) as you complete milestones
@@ -35,8 +35,7 @@ This project emphasizes:
 
 ```
 project-12-asset-manager/
-├── README.md                    # This file
-├── asset-manager-project-guide.md # Detailed implementation guide
+├── README.md                    # This file - complete implementation guide
 ├── AssetManager.sln             # Solution file
 ├── AssetManager.Core/           # Main library implementation
 ├── AssetManager.App/            # Console application
@@ -1353,7 +1352,7 @@ static async Task Main(string[] args)
 
 ## Resources
 
-- 📚 **[Detailed Guide](asset-manager-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Repository Pattern Documentation](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-design)**

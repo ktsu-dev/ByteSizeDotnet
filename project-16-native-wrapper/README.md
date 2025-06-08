@@ -26,7 +26,7 @@ This project emphasizes:
    Review [Interop Guidelines](../microsoft-design-guidelines.md#interop-guidelines) before starting
 
 2. **Start Coding** 💻  
-   See [detailed project guide](native-wrapper-project-guide.md) for step-by-step instructions
+   Follow the implementation guide below for step-by-step instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) as you complete milestones
@@ -35,8 +35,7 @@ This project emphasizes:
 
 ```
 project-16-native-wrapper/
-├── README.md                    # This file
-├── native-wrapper-project-guide.md # Detailed implementation guide
+├── README.md                    # This file - complete implementation guide
 ├── NativeWrapper.sln            # Solution file
 ├── NativeWrapper.Core/          # Main library implementation
 ├── NativeWrapper.App/           # Console application
@@ -67,7 +66,7 @@ A comprehensive native interop system featuring:
 
 ## Resources
 
-- 📚 **[Detailed Guide](native-wrapper-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[P/Invoke Documentation](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/pinvoke)**

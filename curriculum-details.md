@@ -299,61 +299,61 @@ project-01-dice-roller/
 
 ## Phase 5: Tooling & Distribution (Projects 17-20)
 
-### Project 17: NuGet Package Creation
+### Project 17: Mini Game Engine
 
-**Project**: **Package Your Best Library**
+**Project**: **Integration Capstone - Complete Game Engine**
 
-- **Core Concept**: NuGet ecosystem, package management
-- **What You'll Learn**: `.csproj` configuration, versioning, package metadata, publishing
-- **Deliverable**: Published NuGet package
+- **Core Concept**: System integration, large-scale architecture
+- **What You'll Learn**: Modular design, plugin architecture, performance optimization, system integration
+- **Deliverable**: Complete mini game engine integrating all previous concepts
 - **Microsoft Guidelines Focus**:
-  - [Versioning and Compatibility](microsoft-design-guidelines.md#versioning-and-compatibility)
+  - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
   - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
 
 **✅ Template Available**: Pre-configured solution with `GameEngine.Core`, `GameEngine.App`, and `GameEngine.Tests` projects.
 
 **Directory Structure**: `project-17-game-engine/`
 
-### Project 18: Unit Testing & Mocking
+### Project 18: Real-Time Multiplayer System
 
-**Project**: **Test Suite for Game Logic**
+**Project**: **Networking & Real-Time Communication**
 
-- **Core Concept**: Unit testing, test-driven development
-- **What You'll Learn**: MSTest, Moq, test organization, mocking dependencies, test attributes
-- **Deliverable**: Comprehensive test suite
+- **Core Concept**: Network programming, real-time systems
+- **What You'll Learn**: TCP/UDP protocols, network events, state synchronization, lag compensation
+- **Deliverable**: Complete multiplayer networking system
 - **Microsoft Guidelines Focus**:
-  - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
-  - [Exception Design](microsoft-design-guidelines.md#exception-design)
+  - [Networking Guidelines](microsoft-design-guidelines.md#networking-guidelines)
+  - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
 
 **✅ Template Available**: Pre-configured solution with `MultiplayerSystem.Core`, `MultiplayerSystem.App`, and `MultiplayerSystem.Tests` projects.
 
 **Directory Structure**: `project-18-multiplayer-system/`
 
-### Project 19: Source Generators
+### Project 19: Extensible Modding Framework
 
-**Project**: **Code Generator for Game Entities**
+**Project**: **Plugin Architecture & Extensibility Capstone**
 
-- **Core Concept**: Compile-time code generation
-- **What You'll Learn**: `ISourceGenerator`, Roslyn analyzers, compile-time metaprogramming
-- **Deliverable**: Source generator that creates boilerplate code
+- **Core Concept**: Dynamic assembly loading, plugin architecture
+- **What You'll Learn**: Assembly loading, security sandboxing, versioned APIs, hot reloading
+- **Deliverable**: Complete modding framework with development tools
 - **Microsoft Guidelines Focus**:
-  - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
-  - [API Surface Design](microsoft-design-guidelines.md#api-surface-design)
+  - [Assembly Loading Guidelines](microsoft-design-guidelines.md#assembly-loading-guidelines)
+  - [Security Guidelines](microsoft-design-guidelines.md#security-guidelines)
 
 **✅ Template Available**: Pre-configured solution with `ModdingFramework.Core`, `ModdingFramework.App`, and `ModdingFramework.Tests` projects.
 
 **Directory Structure**: `project-19-modding-framework/`
 
-### Project 20: Performance Profiling & Optimization
+### Project 20: Performance Profiling Suite
 
-**Project**: **Optimize Your Game Libraries**
+**Project**: **Diagnostics & Performance Analysis Capstone**
 
-- **Core Concept**: Performance analysis, optimization techniques
-- **What You'll Learn**: dotMemory, PerfView, BenchmarkDotNet, performance best practices
-- **Deliverable**: Performance-optimized versions of previous projects
+- **Core Concept**: Performance profiling, diagnostic tools
+- **What You'll Learn**: CPU profiling, memory analysis, performance monitoring, diagnostic tooling
+- **Deliverable**: Comprehensive performance analysis toolkit
 - **Microsoft Guidelines Focus**:
   - [Performance Guidelines](microsoft-design-guidelines.md#performance-guidelines)
-  - [Collection Guidelines](microsoft-design-guidelines.md#collection-guidelines)
+  - [Diagnostic Guidelines](microsoft-design-guidelines.md#diagnostic-guidelines)
 
 **✅ Template Available**: Pre-configured solution with `PerformanceProfiler.Core`, `PerformanceProfiler.App`, and `PerformanceProfiler.Tests` projects.
 

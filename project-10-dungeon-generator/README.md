@@ -26,7 +26,7 @@ This project emphasizes:
    Review [Factory Pattern Guidelines](../microsoft-design-guidelines.md#factory-patterns) before starting
 
 2. **Start Coding** 💻  
-   See [detailed project guide](dungeon-generator-project-guide.md) for step-by-step instructions
+   Follow the implementation guide below for step-by-step instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) as you complete milestones
@@ -35,8 +35,7 @@ This project emphasizes:
 
 ```
 project-10-dungeon-generator/
-├── README.md                       # This file
-├── dungeon-generator-project-guide.md # Detailed implementation guide
+├── README.md                       # This file - complete implementation guide
 ├── DungeonGenerator.sln         # Solution file
 ├── DungeonGenerator.Core/       # Main library implementation
 ├── DungeonGenerator.App/        # Console application

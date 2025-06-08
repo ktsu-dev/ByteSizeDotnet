@@ -26,7 +26,7 @@ This project demonstrates advanced extensibility and plugin architecture:
    Understanding of assembly loading, AppDomains, and security
 
 2. **Start Building** 💻  
-   See [detailed project guide](modding-framework-project-guide.md) for comprehensive instructions
+   Follow the implementation guide below for comprehensive instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) for modding milestones
@@ -35,8 +35,7 @@ This project demonstrates advanced extensibility and plugin architecture:
 
 ```
 project-19-modding-framework/
-├── README.md                        # This file
-├── modding-framework-project-guide.md # Detailed implementation guide
+├── README.md                        # This file - complete implementation guide
 ├── ModdingFramework.sln          # Solution file
 ├── ModdingFramework.Core/       # Main library implementation
 ├── ModdingFramework.App/        # Console application
@@ -536,7 +535,7 @@ Build comprehensive tooling:
 
 ## Resources
 
-- 📚 **[Detailed Guide](modding-framework-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Plugin Architecture Patterns](https://martinfowler.com/articles/injection.html)** - Dependency injection patterns
 - 🧠 **[Assembly Loading](https://learn.microsoft.com/en-us/dotnet/core/dependency-loading/)** - .NET Core loading
 - 📘 **[Code Security](https://learn.microsoft.com/en-us/dotnet/framework/misc/security)** - .NET security

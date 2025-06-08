@@ -26,7 +26,7 @@ This project emphasizes:
    Review [Expression Tree Guidelines](../microsoft-design-guidelines.md#expression-tree-guidelines) before starting
 
 2. **Start Coding** 💻  
-   See [detailed project guide](dynamic-query-builder-project-guide.md) for step-by-step instructions
+   Follow the implementation guide below for step-by-step instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) as you complete milestones
@@ -35,8 +35,7 @@ This project emphasizes:
 
 ```
 project-14-dynamic-query-builder/
-├── README.md                           # This file
-├── dynamic-query-builder-project-guide.md # Detailed implementation guide
+├── README.md                           # This file - complete implementation guide
 ├── QueryBuilder.sln             # Solution file
 ├── QueryBuilder.Core/           # Main library implementation
 ├── QueryBuilder.App/            # Console application
@@ -67,7 +66,7 @@ A sophisticated query builder system featuring:
 
 ## Resources
 
-- 📚 **[Detailed Guide](dynamic-query-builder-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Expression Trees Documentation](https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/expression-trees/)**

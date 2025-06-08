@@ -26,7 +26,7 @@ This project demonstrates advanced diagnostics and performance analysis:
    Understanding of CPU profiling, memory analysis, and performance metrics
 
 2. **Start Building** 💻  
-   See [detailed project guide](performance-profiler-project-guide.md) for comprehensive instructions
+   Follow the implementation guide below for comprehensive instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) for profiling milestones
@@ -35,8 +35,7 @@ This project demonstrates advanced diagnostics and performance analysis:
 
 ```
 project-20-performance-profiler/
-├── README.md                        # This file
-├── performance-profiler-project-guide.md # Detailed implementation guide
+├── README.md                        # This file - complete implementation guide
 ├── PerformanceProfiler.sln       # Solution file
 ├── PerformanceProfiler.Core/    # Main library implementation
 ├── PerformanceProfiler.App/     # Console application
@@ -619,7 +618,7 @@ Create rich performance visualizations:
 
 ## Resources
 
-- 📚 **[Detailed Guide](performance-profiler-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Performance Profiling](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/)** - .NET profiling tools
 - 🧠 **[Performance Analysis](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/)** - Windows Performance Toolkit
 - 📘 **[Optimization Techniques](https://www.oreilly.com/library/view/high-performance-net/9781785288463/)** - .NET optimization

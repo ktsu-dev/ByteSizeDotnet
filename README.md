@@ -85,14 +85,14 @@ project-xx-name/
 15. **High-Performance Game Buffer** - Memory management & spans
 16. **Native Library Wrapper** - Unsafe code & interop
 
-### Phase 5: Tooling & Distribution (Projects 17-20)
+### Phase 5: Integration & Advanced Systems (Projects 17-20)
 
-**Focus**: Professional development practices
+**Focus**: System integration and advanced topics
 
-17. **Package Your Best Library** - NuGet package creation
-18. **Test Suite for Game Logic** - Unit testing & mocking
-19. **Code Generator for Game Entities** - Source generators
-20. **Optimize Your Game Libraries** - Performance profiling & optimization
+17. **Mini Game Engine** - Integration capstone combining all concepts
+18. **Real-Time Multiplayer System** - Networking & real-time communication
+19. **Extensible Modding Framework** - Plugin architecture & extensibility
+20. **Performance Profiling Suite** - Diagnostics & performance analysis
 
 ---
 

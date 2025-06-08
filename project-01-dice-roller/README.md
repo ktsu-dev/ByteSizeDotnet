@@ -476,8 +476,8 @@ dotnet run --project DiceRoller.App
 
 - [Random Class](https://docs.microsoft.com/en-us/dotnet/api/system.random) - Generating random dice rolls
 - [ArgumentOutOfRangeException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentoutofrangeexception) - Parameter validation
-- [List<T>](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1) - Storing roll history
-- [IReadOnlyList<T>](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlylist-1) - Exposing collections safely
+- [List\<T\>](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1) - Storing roll history
+- [IReadOnlyList\<T\>](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlylist-1) - Exposing collections safely
 
 ### Modern C# Features
 

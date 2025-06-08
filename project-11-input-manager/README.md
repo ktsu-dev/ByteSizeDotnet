@@ -26,7 +26,7 @@ This project emphasizes:
    Review [Observer Pattern Guidelines](../microsoft-design-guidelines.md#observer-pattern) before starting
 
 2. **Start Coding** 💻  
-   See [detailed project guide](input-manager-project-guide.md) for step-by-step instructions
+   Follow the implementation guide below for step-by-step instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) as you complete milestones
@@ -35,8 +35,7 @@ This project emphasizes:
 
 ```
 project-11-input-manager/
-├── README.md                    # This file
-├── input-manager-project-guide.md # Detailed implementation guide
+├── README.md                    # This file - complete implementation guide
 ├── InputManager.sln             # Solution file
 ├── InputManager.Core/           # Main library implementation
 ├── InputManager.App/            # Console application
@@ -1094,7 +1093,7 @@ static void Main(string[] args)
 
 ## Resources
 
-- 📚 **[Detailed Guide](input-manager-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Observer Pattern Documentation](https://learn.microsoft.com/en-us/dotnet/standard/events/)**

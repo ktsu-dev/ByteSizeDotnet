@@ -26,7 +26,7 @@ This project emphasizes:
    Review [Dependency Injection Guidelines](../microsoft-design-guidelines.md#dependency-injection-patterns) before starting
 
 2. **Start Coding** 💻  
-   See [detailed project guide](plugin-system-project-guide.md) for step-by-step instructions
+   Follow the implementation guide below for step-by-step instructions
 
 3. **Track Progress** 🎯  
    Update your [progress tracker](../progress-tracker.md) as you complete milestones
@@ -35,8 +35,7 @@ This project emphasizes:
 
 ```
 project-09-plugin-system/
-├── README.md                    # This file
-├── plugin-system-project-guide.md # Detailed implementation guide
+├── README.md                    # This file - complete implementation guide
 ├── PluginSystem.sln             # Solution file
 ├── PluginSystem.Core/           # Main library implementation
 ├── PluginSystem.App/            # Console application
@@ -1290,7 +1289,7 @@ public class WeaponFactory : IWeaponFactory
 
 ## Resources
 
-- 📚 **[Detailed Guide](plugin-system-project-guide.md)** - Complete implementation instructions
+- 📚 **This README** - Complete implementation instructions
 - 📖 **[Microsoft Guidelines](../microsoft-design-guidelines.md)** - Coding standards reference
 - 🧠 **[Language Essentials](../language-essentials.md)** - Core .NET concepts
 - 📘 **[Dependency Injection Documentation](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)**

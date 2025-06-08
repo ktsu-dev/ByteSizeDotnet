@@ -148,13 +148,13 @@ The README should also have a "Curriculum Overview" section, with the following 
 15. **High-Performance Game Buffer** - Memory management & spans
 16. **Native Library Wrapper** - Unsafe code & interop
 
-### Phase 5: Tooling & Distribution (Projects 17-20)
-**Focus**: Professional development practices
+### Phase 5: Integration & Advanced Systems (Projects 17-20)
+**Focus**: System integration and advanced architectural patterns
 
-17. **Package Your Best Library** - NuGet package creation
-18. **Test Suite for Game Logic** - Unit testing & mocking
-19. **Code Generator for Game Entities** - Source generators
-20. **Optimize Your Game Libraries** - Performance profiling & optimization
+17. **Mini Game Engine** - Combine multiple patterns into a cohesive game engine
+18. **Real-Time Multiplayer System** - Networking
+19. **Extensible Modding Framework** - Plugin architecture
+20. **Performance Profiling Suite** - Diagnostics
 ```
 
 The README should also have a "Getting Started" section, with the following content:
@@ -394,66 +394,200 @@ The README should also have a "Learning Support" section, with the following con
     ```
     project-01-dice-roller/
     ├── README.md                    # Complete setup and implementation guide
-    └── src/                         # Your implementation (to be created)
-        ├── DiceRoller.sln
-        ├── DiceRoller.Core/
-        ├── DiceRoller.App/
-        └── DiceRoller.Tests/
+    ├── DiceRoller.sln
+    ├── DiceRoller.Core/
+    ├── DiceRoller.App/
+    └── DiceRoller.Tests/
     ```
     *   **Project 2 (Card Deck)**:
         *   **✅ Template Available**: Pre-configured solution with `CardDeck.Core`, `CardDeck.App`, and `CardDeck.Tests` projects.
         *   **Directory Structure**: `project-02-card-deck/`
+        ```
+        project-02-card-deck/
+        ├── CardDeck.sln
+        ├── CardDeck.Core/
+        ├── CardDeck.App/
+        └── CardDeck.Tests/
+        ```
     *   **Project 3 (String Utilities)**:
         *   **✅ Template Available**: Pre-configured solution with `StringUtilities.Core`, `StringUtilities.App`, and `StringUtilities.Tests` projects.
         *   **Directory Structure**: `project-03-string-utilities/`
+        ```
+        project-03-string-utilities/
+        ├── StringUtilities.sln
+        ├── StringUtilities.Core/
+        ├── StringUtilities.App/
+        └── StringUtilities.Tests/
+        ```
     *   **Project 4 (State Machine)**:
         *   **✅ Template Available**: Pre-configured solution with `StateMachine.Core`, `StateMachine.App`, and `StateMachine.Tests` projects.
         *   **Directory Structure**: `project-04-state-machine/`
+        ```
+        project-04-state-machine/
+        ├── StateMachine.sln
+        ├── StateMachine.Core/
+        ├── StateMachine.App/
+        └── StateMachine.Tests/
+        ```
     *   **Project 5 (Statistics Analyzer)**:
         *   **✅ Template Available**: Pre-configured solution with `GameStatistics.Core`, `GameStatistics.App`, and `GameStatistics.Tests` projects.
         *   **Directory Structure**: `project-05-statistics-analyzer/`
+        ```
+        project-05-statistics-analyzer/
+        ├── GameStatistics.sln
+        ├── GameStatistics.Core/
+        ├── GameStatistics.App/
+        └── GameStatistics.Tests/
+        ```
     *   **Project 6 (Game Save System)**:
         *   **✅ Template Available**: Pre-configured solution with `GameSave.Core`, `GameSave.App`, and `GameSave.Tests` projects.
         *   **Directory Structure**: `project-06-game-save-system/`
+        ```
+        project-06-game-save-system/
+        ├── GameSave.sln
+        ├── GameSave.Core/
+        ├── GameSave.App/
+        └── GameSave.Tests/
+        ```
     *   **Project 7 (Audio Manager)**:
         *   **✅ Template Available**: Pre-configured solution with `AudioManager.Core`, `AudioManager.App`, and `AudioManager.Tests` projects.
         *   **Directory Structure**: `project-07-audio-manager/`
+        ```
+        project-07-audio-manager/
+        ├── AudioManager.sln
+        ├── AudioManager.Core/
+        ├── AudioManager.App/
+        └── AudioManager.Tests/
+        ```
     *   **Project 8 (Object Pool)**:
         *   **✅ Template Available**: Pre-configured solution with `ObjectPool.Core`, `ObjectPool.App`, and `ObjectPool.Tests` projects.
         *   **Directory Structure**: `project-08-object-pool/`
+        ```
+        project-08-object-pool/
+        ├── ObjectPool.sln
+        ├── ObjectPool.Core/
+        ├── ObjectPool.App/
+        └── ObjectPool.Tests/
+        ```
     *   **Project 9 (Plugin System)**:
         *   **✅ Template Available**: Pre-configured solution with `PluginSystem.Core`, `PluginSystem.App`, and `PluginSystem.Tests` projects.
         *   **Directory Structure**: `project-09-plugin-system/`
+        ```
+        project-09-plugin-system/
+        ├── PluginSystem.sln
+        ├── PluginSystem.Core/
+        ├── PluginSystem.App/
+        └── PluginSystem.Tests/
+        ```
     *   **Project 10 (Dungeon Generator)**:
         *   **✅ Template Available**: Pre-configured solution with `DungeonGenerator.Core`, `DungeonGenerator.App`, and `DungeonGenerator.Tests` projects.
         *   **Directory Structure**: `project-10-dungeon-generator/`
+        ```
+        project-10-dungeon-generator/
+        ├── DungeonGenerator.sln
+        ├── DungeonGenerator.Core/
+        ├── DungeonGenerator.App/
+        └── DungeonGenerator.Tests/
+        ```
     *   **Project 11 (Input Manager)**:
         *   **✅ Template Available**: Pre-configured solution with `InputManager.Core`, `InputManager.App`, and `InputManager.Tests` projects.
         *   **Directory Structure**: `project-11-input-manager/`
+        ```
+        project-11-input-manager/
+        ├── InputManager.sln
+        ├── InputManager.Core/
+        ├── InputManager.App/
+        └── InputManager.Tests/
+        ```
     *   **Project 12 (Asset Manager)**:
         *   **✅ Template Available**: Pre-configured solution with `AssetManager.Core`, `AssetManager.App`, and `AssetManager.Tests` projects.
         *   **Directory Structure**: `project-12-asset-manager/`
+        ```
+        project-12-asset-manager/
+        ├── AssetManager.sln
+        ├── AssetManager.Core/
+        ├── AssetManager.App/
+        └── AssetManager.Tests/
+        ```
     *   **Project 13 (Configuration System)**:
         *   **✅ Template Available**: Pre-configured solution with `ConfigurationSystem.Core`, `ConfigurationSystem.App`, and `ConfigurationSystem.Tests` projects.
         *   **Directory Structure**: `project-13-configuration-system/`
+        ```
+        project-13-configuration-system/
+        ├── ConfigurationSystem.sln
+        ├── ConfigurationSystem.Core/
+        ├── ConfigurationSystem.App/
+        └── ConfigurationSystem.Tests/
+        ```
     *   **Project 14 (Dynamic Query Builder)**:
         *   **✅ Template Available**: Pre-configured solution with `QueryBuilder.Core`, `QueryBuilder.App`, and `QueryBuilder.Tests` projects.
         *   **Directory Structure**: `project-14-dynamic-query-builder/`
+        ```
+        project-14-dynamic-query-builder/
+        ├── QueryBuilder.sln
+        ├── QueryBuilder.Core/
+        ├── QueryBuilder.App/
+        └── QueryBuilder.Tests/
+        ```
     *   **Project 15 (Memory Management & Spans)**:
         *   **✅ Template Available**: Pre-configured solution with `GameBuffer.Core`, `GameBuffer.App`, and `GameBuffer.Tests` projects.
         *   **Directory Structure**: `project-15-game-buffer/`
+        ```
+        project-15-game-buffer/
+        ├── GameBuffer.sln
+        ├── GameBuffer.Core/
+        ├── GameBuffer.App/
+        └── GameBuffer.Tests/
+        ```
     *   **Project 16 (Unsafe Code & Interop)**:
         *   **✅ Template Available**: Pre-configured solution with `NativeWrapper.Core`, `NativeWrapper.App`, and `NativeWrapper.Tests` projects.
         *   **Directory Structure**: `project-16-native-wrapper/`
+        ```
+        project-16-native-wrapper/
+        ├── NativeWrapper.sln
+        ├── NativeWrapper.Core/
+        ├── NativeWrapper.App/
+        └── NativeWrapper.Tests/
+        ```
     *   **Project 17 (Game Engine)**:
         *   **✅ Template Available**: Pre-configured solution with `GameEngine.Core`, `GameEngine.App`, and `GameEngine.Tests` projects.
         *   **Directory Structure**: `project-17-game-engine/`
+        ```
+        project-17-game-engine/
+        ├── GameEngine.sln
+        ├── GameEngine.Core/
+        ├── GameEngine.App/
+        └── GameEngine.Tests/
+        ```
     *   **Project 18 (Unit Testing & Mocking)**:
         *   **✅ Template Available**: Pre-configured solution with `MultiplayerSystem.Core`, `MultiplayerSystem.App`, and `MultiplayerSystem.Tests` projects.
         *   **Directory Structure**: `project-18-multiplayer-system/`
+        ```
+        project-18-multiplayer-system/
+        ├── MultiplayerSystem.sln
+        ├── MultiplayerSystem.Core/
+        ├── MultiplayerSystem.App/
+        └── MultiplayerSystem.Tests/
+        ```
     *   **Project 19 (Source Generators)**:
         *   **✅ Template Available**: Pre-configured solution with `ModdingFramework.Core`, `ModdingFramework.App`, and `ModdingFramework.Tests` projects.
         *   **Directory Structure**: `project-19-modding-framework/`
+        ```
+        project-19-modding-framework/
+        ├── ModdingFramework.sln
+        ├── ModdingFramework.Core/
+        ├── ModdingFramework.App/
+        └── ModdingFramework.Tests/
+        ```
     *   **Project 20 (Performance Profiling & Optimization)**:
         *   **✅ Template Available**: Pre-configured solution with `PerformanceProfiler.Core`, `PerformanceProfiler.App`, and `PerformanceProfiler.Tests` projects.
         *   **Directory Structure**: `project-20-performance-profiler/`
+        ```
+        project-20-performance-profiler/
+        ├── PerformanceProfiler.sln
+        ├── PerformanceProfiler.Core/
+        ├── PerformanceProfiler.App/
+        └── PerformanceProfiler.Tests/
+        ```
+
+*   **README Expansion Status (20
