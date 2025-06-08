@@ -223,6 +223,9 @@ The README should also have a "Learning Support" section, with the following con
 *   **Project Directory Layout**:
     *   Project 1: User manually creates the directory structure and sets up the projects.
     *   Projects 2-20: Follow the same directory layout. The solution file and all project folders (e.g., Core, App, Tests) reside in the project's root directory, *not* within a `src` subdirectory.
+        *   For projects where the intention is to make a library, include an App project to demo the functionality.
+
+*   **Library Projects should have App Projects:** For projects where the intention is to make a library, always include an App project to demo the functionality.
 
 *   **Empty Directories:** All empty `docs` and `tests` directories should be removed from the project structure. These directories will not be included in template projects.
 
@@ -232,9 +235,23 @@ The README should also have a "Learning Support" section, with the following con
 
 *   **Projects Layout Analysis:**
     *   Complete Projects (with Core/App/Tests): Projects 3, 4, 5, 7 - Full three-tier structure
-    *   Partial Projects (solution + core only): Projects 6, 8, 9, 13, 19, 20 - Have Core libraries and solutions
-    *   Minimal Projects (solution + README only): Projects 10, 11, 12, 14, 17, 18 - Just solution files and documentation
+    *   Library Projects (Core + Tests + Solution): Projects 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+    *   *Projects 6, 8, 9, 13, 19, 20 - Have Core libraries and solutions*
+    *   *Projects 10, 11, 12, 14, 17, 18 - Just solution files and documentation*
+    *   Minimal Projects (solution + README only): Projects 10, 11, 12, 14, 16, 17, 18 - Just solution files and documentation
     *   Documentation Only: Project 15, 16 - Currently has only README
+        *   The above lists are now deprecated as all projects should now fit the complete projects structure.
+
+*   **Updating READMEs for Implementation Guidance:** All projects should have comprehensive, self-contained READMEs with detailed implementation guides. The following projects currently need to be expanded to provide complete implementation guidance:
+    *   Project 10 (Dungeon Generator) - Builder & Factory Patterns
+    *   Project 11 (Input Manager) - Command Pattern
+    *   Project 12 (Asset Manager) - Repository & Unit of Work
+    *   Project 13 (Configuration System) - Reflection & Attributes
+    *   Project 14 (Dynamic Query Builder) - Expression Trees
+    *   Project 15 (Game Buffer) - Memory Management & Spans
+    *   Project 16 (Native Wrapper) - Unsafe Code & Interop
+    *   Project 17 (Game Engine) - System Integration
+    *   Project 19 (Modding Framework) - Plugin Architecture
 
 *   **.gitignore Configuration:** The root directory should contain a comprehensive `.gitignore` file tailored for .NET development. This file should exclude build artifacts, temporary files, IDE-specific files, and other files that should not be tracked in version control. The `.gitignore` file should include the following entries:
 
@@ -800,23 +817,3 @@ ASALocalRun/
 .obsidian/workspace.json
 
 ```
-
-*   **Project Directory Layout**:
-    *   Project 1: User manually creates the directory structure and sets up the projects.
-    *   Projects 2-20: Follow the same directory layout. The solution file and all project folders (e.g., Core, App, Tests) reside in the project's root directory, *not* within a `src` subdirectory.
-        *   For projects where the intention is to make a library, include an App project to demo the functionality.
-
-*   **Empty Directories:** All empty `docs` and `tests` directories should be removed from the project structure. These directories will not be included in template projects.
-
-*   **Comprehensive README Files:** The README files for each project must be the comprehensive guide for implementing the project and learning the desired concepts. Separate project guides should be used as reference when updating the READMEs and then removed. All READMEs should follow a similar format and structure and be comprehensive.
-
-*   **README Consistency Check:** Ensure that the README files for projects 7-20 are consistent with the format and structure of the README files in earlier projects (1-6). The README files for projects 7-19 are currently not in line with the comprehensive format established in projects 1-6 and need to be updated. These projects are missing detailed implementation guides, "Testing Your Understanding" sections, "Extension Challenges", "Common Pitfalls & Solutions", comprehensive code examples, and contain shorter, less educational content. Project 18's README is currently empty and requires immediate attention.
-
-*   **Projects Layout Analysis:**
-    *   Complete Projects (with Core/App/Tests): Projects 3, 4, 5, 7 - Full three-tier structure
-    *   Library Projects (Core + Tests + Solution): Projects 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
-    *   *Projects 6, 8, 9, 13, 19, 20 - Have Core libraries and solutions*
-    *   *Projects 10, 11, 12, 14, 17, 18 - Just solution files and documentation*
-    *   Minimal Projects (solution + README only): Projects 10, 11, 12, 14, 16, 17, 18 - Just solution files and documentation
-    *   Documentation Only: Project 15, 16 - Currently has only README
-        *   The above lists are now deprecated as all projects should now fit the complete projects structure.

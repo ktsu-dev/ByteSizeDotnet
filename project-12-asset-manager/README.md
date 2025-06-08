@@ -46,21 +46,69 @@ project-12-asset-manager/
 
 A sophisticated asset management system featuring:
 
-- Repository pattern for asset data access
-- Unit of work for transaction management
-- Multi-level caching with eviction policies
-- Asynchronous asset loading with progress tracking
-- Asset dependency resolution and loading order
-- Hot-reloading for development workflows
+- **Repository Pattern** - Clean abstraction for asset data access and queries
+- **Unit of Work Pattern** - Transaction management and coordinated asset operations
+- **Specification Pattern** - Flexible asset querying and filtering criteria
+- **Caching Strategy** - Multi-level caching with LRU, LFU, and TTL eviction policies
+- **Dependency Resolution** - Automatic loading of asset dependencies and references
+- **Async Loading Pipeline** - Non-blocking asset loading with progress tracking
+- **Hot-Reload System** - Development-time asset reloading and change detection
+- **Asset Versioning** - Version management and compatibility checking
 
 ## Key Concepts
 
-- **Repository Pattern**: Abstracting data access logic
-- **Unit of Work Pattern**: Managing transactions and change tracking
-- **Specification Pattern**: Flexible querying capabilities
-- **Caching Strategies**: LRU, LFU, and time-based eviction
-- **Dependency Resolution**: Managing asset interdependencies
-- **Lazy Loading**: On-demand asset initialization
+### Repository Pattern
+
+```csharp
+// Clean abstraction for asset data access
+public interface IAssetRepository<T> where T : class, IAsset
+{
+    Task<T?> GetByIdAsync(string id);
+    Task<IEnumerable<T>> GetAllAsync();
+    Task<IEnumerable<T>> FindAsync(ISpecification<T> specification);
+    Task AddAsync(T asset);
+    Task UpdateAsync(T asset);
+    Task DeleteAsync(string id);
+}
+
+// Usage
+var textureRepo = new AssetRepository<Texture>(dataSource, cache);
+var playerTexture = await textureRepo.GetByIdAsync("player_idle.png");
+```
+
+### Unit of Work Pattern
+
+```csharp
+// Coordinate multiple repository operations as single transaction
+using var unitOfWork = new AssetUnitOfWork();
+var textureRepo = unitOfWork.GetRepository<Texture>();
+var modelRepo = unitOfWork.GetRepository<Model>();
+
+await textureRepo.LoadAsync("character_diffuse.png");
+await modelRepo.LoadAsync("character_model.fbx");
+await unitOfWork.CommitAsync(); // All or nothing
+```
+
+### Specification Pattern
+
+```csharp
+// Flexible query building
+var largeTextures = new AndSpecification<Texture>(
+    new TextureSizeSpecification(minWidth: 1024),
+    new FileFormatSpecification("png", "jpg")
+);
+
+var assets = await repository.FindAsync(largeTextures);
+```
+
+### Core Data Access Patterns Applied
+
+- **Repository** - Abstracting asset storage and retrieval
+- **Unit of Work** - Transaction boundaries for asset operations
+- **Specification** - Composable query logic
+- **Cache-Aside** - Performance optimization through caching
+- **Observer** - Change notifications and hot-reload
+- **Strategy** - Pluggable loading and caching strategies
 
 ## Resources
 
