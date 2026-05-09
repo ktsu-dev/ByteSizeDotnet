@@ -1,0 +1,1 @@
+dotnet curriculum;learning path;tutorial;education;dotnet fundamentals;csharp learning;design patterns;language features;teaching;exercises;mstest;dotnet 8;projects;byte sized
